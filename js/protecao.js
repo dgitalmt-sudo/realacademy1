@@ -10,7 +10,8 @@
   /* ── 1. VERIFICAÇÃO DE DOMÍNIO ─────────────────────────────────── */
   var DOMINIOS_AUTORIZADOS = [
     'realacademybrazil.online',
-    'www.realacademybrazil.online'
+    'www.realacademybrazil.online',
+    'realacademy1.vercel.app'
   ];
 
   var host = window.location.hostname.toLowerCase();
