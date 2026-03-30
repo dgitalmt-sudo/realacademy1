@@ -1,0 +1,12 @@
+# ============================================================
+#  CREDENCIAIS AbacatePay
+# ============================================================
+
+# Token da API AbacatePay (dev = sandbox, troque pelo token real em produção)
+ABACATEPAY_TOKEN=abc_dev_dDda1r3Jt0q3hBNgQ0QgpckT
+
+# Porta do servidor local
+PORT=3001
+
+# URL do site (usada como returnUrl / completionUrl)
+SITE_URL=http://localhost:3001

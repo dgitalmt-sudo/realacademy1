@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://realacademybrazil.online/fila.html">
+  <title>Fila de Acesso — Real Academy Brasil</title>
+  <meta name="description" content="Aguarde sua vez na fila de acesso ao sistema de inscrições da Real Academy Brasil.">
+  <meta property="og:title" content="Fila de Acesso — Real Academy Brasil">
+  <meta property="og:description" content="Aguarde sua vez na fila de acesso ao sistema de inscrições da Real Academy Brasil.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&q=80">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/protecao.js"></script>
+</head>
+<body>
+
+  <!-- ===== PÁGINA DA FILA — tela cheia, sem scroll ===== -->
+  <div class="fila-page" id="filaPage">
+
+    <!-- Partículas douradas animadas — CSS puro, sem canvas -->
+    <div class="particulas" id="particulas" aria-hidden="true"></div>
+
+    <!-- Header simples com logo -->
+    <header class="fila-header">
+      <a href="index.html" class="logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+        <img src="imagens/escudo.png" alt="Real Academy Brasil" style="height:32px;width:auto;filter:brightness(0) invert(1);">
+        <span style="font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:#fff;letter-spacing:0.02em;">REAL ACADEMY <span style="color:#C8A84B;">BRASIL</span></span>
+      </a>
+    </header>
+
+    <!-- Jogador decorativo -->
+    <img src="imagens/imgS620I11753T20190514175719.png" class="fila-jogador" aria-hidden="true" alt="">
+
+    <!-- Conteúdo central da fila -->
+    <div class="fila-content">
+
+      <!-- BLOCO FILA — visível durante a contagem regressiva -->
+      <div class="fila-box" id="filaBox" role="status" aria-live="polite">
+
+        <span class="fila-lock-icon" aria-hidden="true">
+          <i class="fas fa-lock"></i>
+        </span>
+        <div class="fila-titulo-lock">ACESSO CONTROLADO</div>
+        <div class="fila-subtitulo">
+          Você está na fila de acesso<br>ao sistema de inscrições
+        </div>
+
+        <!-- Card de posição na fila -->
+        <div class="fila-posicao-card" id="posicaoCard">
+          <div class="fila-posicao-label">Sua posição na fila:</div>
+          <div class="fila-posicao-numero" id="posicaoNumero">3º lugar</div>
+          <div class="fila-posicao-texto" id="posicaoTexto">2 pessoas na sua frente</div>
+        </div>
+
+        <div class="fila-espera-label">Aguarde sua vez...</div>
+
+        <!-- Card do cronômetro com barra de progresso -->
+        <div class="fila-timer-card">
+          <div class="fila-timer-label">Tempo estimado de espera:</div>
+          <div class="fila-timer-numero" id="timerNumero" aria-live="off">00:20</div>
+          <div class="fila-progress-wrap">
+            <div class="fila-gol" aria-hidden="true">
+              <div class="gol-trave"></div>
+              <div class="gol-poste gol-esq"></div>
+              <div class="gol-poste gol-dir"></div>
+              <div class="gol-rede"></div>
+            </div>
+            <div class="fila-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="20">
+              <div class="fila-progress-fill" id="progressFill">
+                <span class="bola-progresso" id="bolaProgresso">
+                  <i class="fas fa-futbol"></i>
+                  <span class="bola-sombra"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+<div class="fila-aviso">
+          <strong>⚠️ Não feche esta página</strong><br>
+          Você perderá sua posição na fila
+        </div>
+
+      </div><!-- fim #filaBox -->
+
+      <!-- BLOCO ACESSO LIBERADO — aparece ao chegar em 00:00 -->
+      <div class="fila-liberado" id="filaLiberado" aria-live="assertive">
+
+        <div class="check-icon" aria-hidden="true">
+          <i class="fas fa-check"></i>
+        </div>
+
+        <div class="liberado-titulo">✅ ACESSO LIBERADO!</div>
+
+        <p class="liberado-texto">
+          Você está autorizado a verificar<br>as cidades disponíveis.
+        </p>
+
+        <p class="liberado-expira">
+          ⏳ Este acesso expira em:
+          <strong id="expiraTimer">04:59</strong>
+        </p>
+
+        <button class="btn btn-dourado btn-grande btn-pulso" id="btnAcessarCidades">
+          ACESSAR CIDADES DISPONÍVEIS &nbsp;<i class="fas fa-arrow-right"></i>
+        </button>
+
+      </div><!-- fim #filaLiberado -->
+
+    </div><!-- fim .fila-content -->
+
+  </div><!-- fim .fila-page -->
+
+  <!-- ===== BOTÃO WHATSAPP FLUTUANTE ===== -->
+  <a href="https://wa.me/5500000000000" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <style>
+    .fila-acessos, .fila-acessos-dot { display: none; }
+
+    /* Opacidade reduzida em 20% nos ícones em frente ao fundo */
+    .fila-lock-icon,
+    .check-icon,
+    .bola-progresso,
+    .fila-box .fa-futbol,
+    .fila-liberado .fa-arrow-right {
+      opacity: 0.8;
+    }
+
+    /* Wrapper da barra com gol */
+    .fila-progress-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .fila-progress-wrap .fila-progress-bar {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    /* Gol */
+    .fila-gol {
+      position: relative;
+      width: 22px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+    .gol-trave {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: #C8A84B;
+    }
+    .gol-poste {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: #C8A84B;
+    }
+    .gol-esq { left: 0; }
+    .gol-dir { right: 0; }
+    .gol-rede {
+      position: absolute;
+      top: 2px; left: 2px; right: 2px; bottom: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(200,168,75,0.2) 0px, rgba(200,168,75,0.2) 1px, transparent 1px, transparent 5px),
+        repeating-linear-gradient(90deg, rgba(200,168,75,0.2) 0px, rgba(200,168,75,0.2) 1px, transparent 1px, transparent 5px);
+    }
+
+    @keyframes quicar {
+      0%   { transform: translateY(0)  scaleX(1)   scaleY(1); }
+      40%  { transform: translateY(-18px) scaleX(1)   scaleY(1); }
+      50%  { transform: translateY(-20px) scaleX(1)   scaleY(1); }
+      75%  { transform: translateY(-2px)  scaleX(1.2) scaleY(0.8); }
+      85%  { transform: translateY(-2px)  scaleX(1.2) scaleY(0.8); }
+      100% { transform: translateY(0)  scaleX(1)   scaleY(1); }
+    }
+    @keyframes sombra {
+      0%,100% { transform: translateX(-50%) scale(1);   opacity: 0.3; }
+      50%      { transform: translateX(-50%) scale(0.5); opacity: 0.1; }
+    }
+    .bola-progresso {
+      position: absolute;
+      right: -10px;
+      top: -4px;
+      width: 20px; height: 20px;
+    }
+    .bola-progresso i {
+      font-size: 18px;
+      color: #C8A84B;
+      animation: quicar 0.7s cubic-bezier(0.33,0,0.66,0) infinite;
+      display: block;
+      filter: drop-shadow(0 0 4px rgba(200,168,75,0.5));
+      transform-origin: center bottom;
+    }
+    .bola-sombra {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      width: 14px; height: 4px;
+      background: rgba(200,168,75,0.35);
+      border-radius: 50%;
+      animation: sombra 0.7s cubic-bezier(0.33,0,0.66,0) infinite;
+    }
+    /* Imagem de fundo cobrindo a tela inteira */
+    .fila-jogador {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      object-position: center top;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      opacity: 0.35;
+      /* Camada escura para garantir legibilidade do conteúdo */
+      mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.6) 0%,
+        rgba(0,0,0,0.9) 60%,
+        rgba(0,0,0,1) 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.6) 0%,
+        rgba(0,0,0,0.9) 60%,
+        rgba(0,0,0,1) 100%
+      );
+      filter: drop-shadow(0 0 40px rgba(200, 168, 75, 0.25));
+    }
+
+    /* Em mobile mantém a mesma lógica de fundo, ajustando o foco */
+    @media (max-width: 768px) {
+      .fila-jogador {
+        opacity: 0.25;
+        object-position: center top;
+        mask-image: linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.5) 0%,
+          rgba(0,0,0,0.85) 50%,
+          rgba(0,0,0,1) 100%
+        );
+        -webkit-mask-image: linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.5) 0%,
+          rgba(0,0,0,0.85) 50%,
+          rgba(0,0,0,1) 100%
+        );
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+      }
+    }
+
+    /* Reposicionar o box da fila levemente para a esquerda em desktop */
+    @media (min-width: 769px) {
+      .fila-content {
+        align-items: flex-start !important;
+        padding-left: 8vw !important;
+      }
+    }
+
+    .fila-acessos {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 16px 0 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+    }
+    .fila-acessos-dot {
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #4ade80;
+      animation: dotPulso 1.5s ease infinite;
+      flex-shrink: 0;
+    }
+  </style>
+  <script src="js/fila.js"></script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cidades Disponíveis — Real Academy Brasil</title>
+  <link rel="canonical" href="https://realacademybrazil.online/cidades.html">
+  <meta name="description" content="Verifique se há uma peneira Real Academy Brasil disponível na sua cidade. +100 municípios em 25 estados. Evento: 14 de junho de 2026.">
+  <meta property="og:title" content="Cidades Disponíveis — Real Academy Brasil">
+  <meta property="og:description" content="Verifique se há uma peneira Real Academy Brasil disponível na sua cidade. +100 municípios em 25 estados.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&q=80">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/protecao.js"></script>
+</head>
+<body>
+
+  <!-- ===== HEADER FIXO ===== -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+        <img src="imagens/escudo.png" alt="Real Academy Brasil" style="height:32px;width:auto;">
+        <span style="font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:#001489;letter-spacing:0.02em;">REAL ACADEMY <span style="color:#C8A84B;">BRASIL</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav aria-label="Navegação principal">
+        <ul class="nav" id="navMenu">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cidades.html" aria-current="page">Cidades</a></li>
+          <li><a href="inscricao.html">Inscrição</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO COMPACTO ===== -->
+  <section class="cidades-hero" aria-label="Cabeçalho da página de cidades">
+    <div class="cidades-hero-tag">
+      <span class="cidades-hero-tag-dot" aria-hidden="true"></span>
+      14 de Junho de 2026 &nbsp;|&nbsp; 25 Estados
+    </div>
+    <h1>Encontre a peneira<br><span>mais próxima de você</span></h1>
+    <div class="cidades-hero-divider" aria-hidden="true"></div>
+    <p>+100 municípios &nbsp;&bull;&nbsp; Masculino e Feminino &nbsp;&bull;&nbsp; 7 a 18 anos</p>
+  </section>
+
+  <!-- ===== BUSCA ===== -->
+  <section class="busca-section" aria-label="Buscar cidade">
+    <div class="busca-card">
+      <h3>
+        <i class="fas fa-search-location" style="color:var(--dourado);margin-right:8px" aria-hidden="true"></i>
+        Verificar Disponibilidade
+      </h3>
+      <div class="busca-form" role="search">
+
+        <div class="busca-row">
+          <div class="input-grupo">
+            <label for="inputCidade">Cidade</label>
+            <input
+              type="text" id="inputCidade" class="input-campo"
+              placeholder="Coloque sua cidade aqui" autocomplete="off"
+              aria-label="Nome da cidade">
+          </div>
+          <div class="input-grupo">
+            <label for="selectEstado">Estado</label>
+            <select id="selectEstado" class="input-campo" aria-label="Selecionar estado">
+              <option value="">Selecione o seu estado</option>
+              <option value="AC">AC — Acre</option>
+              <option value="AL">AL — Alagoas</option>
+              <option value="AM">AM — Amazonas</option>
+              <option value="AP">AP — Amapá</option>
+              <option value="BA">BA — Bahia</option>
+              <option value="CE">CE — Ceará</option>
+              <option value="DF">DF — Distrito Federal</option>
+              <option value="ES">ES — Espírito Santo</option>
+              <option value="GO">GO — Goiás</option>
+              <option value="MA">MA — Maranhão</option>
+              <option value="MG">MG — Minas Gerais</option>
+              <option value="MS">MS — Mato Grosso do Sul</option>
+              <option value="MT">MT — Mato Grosso</option>
+              <option value="PA">PA — Pará</option>
+              <option value="PB">PB — Paraíba</option>
+              <option value="PE">PE — Pernambuco</option>
+              <option value="PI">PI — Piauí</option>
+              <option value="PR">PR — Paraná</option>
+              <option value="RJ">RJ — Rio de Janeiro</option>
+              <option value="RN">RN — Rio Grande do Norte</option>
+              <option value="RO">RO — Rondônia</option>
+              <option value="RR">RR — Roraima</option>
+              <option value="RS">RS — Rio Grande do Sul</option>
+              <option value="SC">SC — Santa Catarina</option>
+              <option value="SE">SE — Sergipe</option>
+              <option value="SP">SP — São Paulo</option>
+              <option value="TO">TO — Tocantins</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-grupo">
+          <label for="selectIdade">Idade do atleta</label>
+          <select id="selectIdade" class="input-campo" aria-label="Selecionar idade do atleta">
+            <option value="">Selecione a idade</option>
+            <option value="7">7 anos</option>
+            <option value="8">8 anos</option>
+            <option value="9">9 anos</option>
+            <option value="10">10 anos</option>
+            <option value="11">11 anos</option>
+            <option value="12">12 anos</option>
+            <option value="13">13 anos</option>
+            <option value="14">14 anos</option>
+            <option value="15">15 anos</option>
+            <option value="16">16 anos</option>
+            <option value="17">17 anos</option>
+            <option value="18">18 anos</option>
+          </select>
+        </div>
+
+        <button class="btn btn-azul" id="btnBuscar" style="width:100%" type="button">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          VERIFICAR DISPONIBILIDADE
+        </button>
+
+        <div class="link-localizacao" id="btnLocalizacao" role="button" tabindex="0" aria-label="Usar minha localização atual">
+          <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+          Usar minha localização atual
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESULTADO ===== -->
+  <section class="resultado-section" id="resultadoSection" aria-label="Resultado da busca" aria-live="polite">
+    <div class="resultado-card">
+
+      <div class="resultado-header">
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+        <span>A peneira mais próxima de você será em:</span>
+      </div>
+
+      <div class="resultado-body">
+        <div class="resultado-cidade" id="resultCidade">—</div>
+        <div class="resultado-estado" id="resultEstado">—</div>
+
+        <div class="resultado-info">
+          <div class="resultado-info-item" id="resultDistanciaItem" style="display:none">
+            <i class="fas fa-route" aria-hidden="true"></i>
+            <span id="resultDistanciaTexto"></span>
+          </div>
+          <div class="resultado-info-item" id="resultTempoItem" style="display:none">
+            <i class="fas fa-car" aria-hidden="true"></i>
+            <span id="resultTempoTexto"></span>
+          </div>
+          <div class="resultado-info-item">
+            <i class="far fa-calendar-alt" aria-hidden="true"></i>
+            <span id="resultData">📅 Data: 14 de junho de 2026 (domingo)</span>
+          </div>
+          <div class="resultado-info-item">
+            <i class="far fa-clock" aria-hidden="true"></i>
+            <span id="resultHorario">⏰ Horário: 08:00</span>
+          </div>
+          <div class="resultado-info-item">
+            <i class="fas fa-map-pin" aria-hidden="true"></i>
+            <span>📍 Local: Será publicado próximo da data</span>
+          </div>
+        </div>
+
+        <div class="resultado-divider" aria-hidden="true"></div>
+
+        <div class="alerta-vagas" aria-live="polite" id="alertaVagas">
+          <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+          Vagas restantes: <strong id="vagasContador">30</strong>
+        </div>
+
+        <button class="btn btn-dourado btn-grande" id="btnInscrever" style="width:100%" type="button">
+          FAZER MINHA INSCRIÇÃO AGORA &nbsp;<i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p><strong>Real Academy Brasil</strong> | Evento esportivo oficial</p>
+    <p>Este é um evento independente de captação de talentos</p>
+  </footer>
+
+  <!-- ===== BOTÃO WHATSAPP FLUTUANTE ===== -->
+  <a href="https://wa.me/5500000000000" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <script>
+    /* Menu mobile */
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu    = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', function () {
+      const aberto = navMenu.classList.toggle('aberto');
+      menuToggle.setAttribute('aria-expanded', aberto);
+    });
+    navMenu.querySelectorAll('a').forEach(function (l) {
+      l.addEventListener('click', function () {
+        navMenu.classList.remove('aberto');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* Acessibilidade — ativar link-localizacao via teclado */
+    document.getElementById('btnLocalizacao').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') this.click();
+    });
+  </script>
+  <script src="js/cidades.js"></script>
+</body>
+</html>

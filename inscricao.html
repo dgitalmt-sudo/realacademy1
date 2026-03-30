@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscrição — Real Academy Brasil</title>
+  <link rel="canonical" href="https://realacademybrazil.online/inscricao.html">
+  <meta name="description" content="Faça sua inscrição na maior peneira de futebol do Brasil. Preencha os dados do atleta e garanta sua vaga. Evento: 14 de junho de 2026.">
+  <meta property="og:title" content="Inscrição — Real Academy Brasil">
+  <meta property="og:description" content="Garanta sua vaga na maior peneira de futebol do Brasil. Jovens de 7 a 18 anos, 14 de junho de 2026.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=1200&q=80">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/protecao.js"></script>
+</head>
+<body class="quiz-page">
+
+  <!-- ===== HEADER FIXO ===== -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" style="display:flex;align-items:center;gap:8px;text-decoration:none;">
+        <img src="imagens/escudo.png" alt="Real Academy Brasil" style="height:32px;width:auto;">
+        <span style="font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:#001489;letter-spacing:0.02em;">REAL ACADEMY <span style="color:#C8A84B;">BRASIL</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav aria-label="Navegação principal">
+        <ul class="nav" id="navMenu">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cidades.html">Cidades</a></li>
+          <li><a href="inscricao.html" aria-current="page">Inscrição</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== BARRA DE PROGRESSO (sticky abaixo do header) ===== -->
+  <div class="quiz-progresso" role="navigation" aria-label="Progresso da inscrição">
+    <div class="quiz-progresso-inner">
+      <div class="quiz-etapa-texto" id="etapaTexto">Etapa 1 de 4 — Informações Básicas</div>
+      <div class="quiz-barra" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="6">
+        <div class="quiz-barra-fill" id="barraProg" style="width:6%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CONTAINER DAS QUESTÕES ===== -->
+  <div class="quiz-container" id="quizContainer">
+
+    <!-- ══ Q1 — Nome do atleta ══ -->
+    <div class="quiz-card ativo" id="card-1">
+      <div class="quiz-numero">Pergunta 1 de 16</div>
+      <h2 class="quiz-pergunta">Qual é o nome completo do atleta?</h2>
+      <input type="text" id="q1" class="quiz-input" placeholder="Nome completo do atleta" autocomplete="name">
+      <div class="quiz-erro" id="erro-q1">Por favor, preencha o nome do atleta.</div>
+      <div class="quiz-nav">
+        <button class="btn btn-dourado" onclick="proximaQ(1)">
+          Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══ Q2 — Nome do responsável ══ -->
+    <div class="quiz-card" id="card-2">
+      <div class="quiz-numero">Pergunta 2 de 16</div>
+      <h2 class="quiz-pergunta">Qual é o nome completo do responsável?</h2>
+      <input type="text" id="q2" class="quiz-input" placeholder="Nome completo do responsável" autocomplete="name">
+      <div class="quiz-erro" id="erro-q2">Por favor, preencha o nome do responsável.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(2)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(2)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q3 — Data de nascimento ══ -->
+    <div class="quiz-card" id="card-3">
+      <div class="quiz-numero">Pergunta 3 de 16</div>
+      <h2 class="quiz-pergunta">Qual é a data de nascimento do atleta?</h2>
+      <input type="date" id="q3" class="quiz-input" max="" min="">
+      <div class="quiz-idade-display" id="idadeDisplay"></div>
+      <div class="quiz-erro" id="erro-q3">Por favor, informe a data de nascimento.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(3)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(3)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q4 — Altura e Peso ══ -->
+    <div class="quiz-card" id="card-4">
+      <div class="quiz-numero">Pergunta 4 de 16</div>
+      <h2 class="quiz-pergunta">Qual é a altura e o peso do atleta?</h2>
+      <div class="quiz-input-row">
+        <div class="quiz-input-grupo">
+          <label for="q4a">Altura (cm)</label>
+          <input type="number" id="q4a" class="quiz-input" placeholder="Ex: 165" min="80" max="250">
+        </div>
+        <div class="quiz-input-grupo">
+          <label for="q4b">Peso (kg)</label>
+          <input type="number" id="q4b" class="quiz-input" placeholder="Ex: 60" min="15" max="200">
+        </div>
+      </div>
+      <div class="quiz-erro" id="erro-q4">Por favor, preencha a altura e o peso.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(4)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(4)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q5 — Posição principal ══ -->
+    <div class="quiz-card" id="card-5">
+      <div class="quiz-numero">Pergunta 5 de 16</div>
+      <h2 class="quiz-pergunta">Qual é a posição principal do atleta?</h2>
+      <select id="q5" class="quiz-select">
+        <option value="">Selecione a posição...</option>
+        <option value="Goleiro">Goleiro</option>
+        <option value="Lateral Direito">Lateral Direito</option>
+        <option value="Lateral Esquerdo">Lateral Esquerdo</option>
+        <option value="Zagueiro">Zagueiro</option>
+        <option value="Volante">Volante</option>
+        <option value="Meia">Meia</option>
+        <option value="Ponta Direita">Ponta Direita</option>
+        <option value="Ponta Esquerda">Ponta Esquerda</option>
+        <option value="Centroavante">Centroavante</option>
+      </select>
+      <div class="alerta-posicao" id="alertaPosicao" aria-live="polite">
+        <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+        Apenas 1 vaga restante para essa posição
+      </div>
+      <div class="quiz-erro" id="erro-q5">Por favor, selecione uma posição.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(5)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(5)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q6 — Posição secundária (opcional) ══ -->
+    <div class="quiz-card" id="card-6">
+      <div class="quiz-numero">Pergunta 6 de 16</div>
+      <h2 class="quiz-pergunta">O atleta joga em alguma posição secundária?</h2>
+      <select id="q6" class="quiz-select">
+        <option value="">Selecione a posição...</option>
+        <option value="Goleiro">Goleiro</option>
+        <option value="Lateral Direito">Lateral Direito</option>
+        <option value="Lateral Esquerdo">Lateral Esquerdo</option>
+        <option value="Zagueiro">Zagueiro</option>
+        <option value="Volante">Volante</option>
+        <option value="Meia">Meia</option>
+        <option value="Ponta Direita">Ponta Direita</option>
+        <option value="Ponta Esquerda">Ponta Esquerda</option>
+        <option value="Centroavante">Centroavante</option>
+      </select>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(6)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn-pular" onclick="pularQ(6)">Pular</button>
+        <button class="btn btn-dourado" onclick="proximaQ(6)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q7 — Pé dominante ══ -->
+    <div class="quiz-card" id="card-7">
+      <div class="quiz-numero">Pergunta 7 de 16</div>
+      <h2 class="quiz-pergunta">Qual é o pé dominante do atleta?</h2>
+      <div class="quiz-opcoes" id="opcoes-q7">
+        <button class="quiz-opcao-btn" data-valor="Destro" onclick="selecionarOpcao('q7', 'Destro', this)">⚽ Destro</button>
+        <button class="quiz-opcao-btn" data-valor="Canhoto" onclick="selecionarOpcao('q7', 'Canhoto', this)">⚽ Canhoto</button>
+      </div>
+      <input type="hidden" id="q7" value="">
+      <div class="quiz-erro" id="erro-q7">Por favor, selecione o pé dominante.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(7)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(7)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q8 — Cidade e bairro ══ -->
+    <div class="quiz-card" id="card-8">
+      <div class="quiz-numero">Pergunta 8 de 16</div>
+      <h2 class="quiz-pergunta">Qual é a cidade e o bairro do atleta?</h2>
+      <div class="quiz-input-row">
+        <div class="quiz-input-grupo">
+          <label for="q8a">Cidade</label>
+          <input type="text" id="q8a" class="quiz-input" placeholder="Ex: São Paulo" autocomplete="address-level2">
+        </div>
+        <div class="quiz-input-grupo">
+          <label for="q8b">Bairro</label>
+          <input type="text" id="q8b" class="quiz-input" placeholder="Ex: Centro" autocomplete="address-level3">
+        </div>
+      </div>
+      <div class="quiz-erro" id="erro-q8">Por favor, preencha a cidade.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(8)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(8)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q9 — Telefone WhatsApp ══ -->
+    <div class="quiz-card" id="card-9">
+      <div class="quiz-numero">Pergunta 9 de 16</div>
+      <h2 class="quiz-pergunta">Qual é o telefone com WhatsApp do responsável?</h2>
+      <input type="tel" id="q9" class="quiz-input" placeholder="(00) 00000-0000" maxlength="15" autocomplete="tel">
+      <div class="quiz-erro" id="erro-q9">Por favor, informe um telefone válido.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(9)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(9)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q10 — E-mail principal com confirmação ══ -->
+    <div class="quiz-card" id="card-10">
+      <div class="quiz-numero">Pergunta 10 de 16</div>
+      <h2 class="quiz-pergunta">Qual é o e-mail principal para receber informações?</h2>
+      <div class="quiz-input-grupo" style="margin-bottom:14px">
+        <label for="q10">E-mail</label>
+        <input type="email" id="q10" class="quiz-input" placeholder="exemplo@email.com" autocomplete="email">
+      </div>
+      <div class="quiz-input-grupo">
+        <label for="q10conf">Confirme o e-mail</label>
+        <input type="email" id="q10conf" class="quiz-input" placeholder="Digite novamente seu e-mail" autocomplete="off" onpaste="return false">
+      </div>
+      <div class="quiz-erro" id="erro-q10">Por favor, informe um e-mail válido.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(10)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(10)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q11 — Parentesco (condicional: só se idade < 18) ══ -->
+    <div class="quiz-card" id="card-11">
+      <div class="quiz-numero">Pergunta 11 de 16</div>
+      <h2 class="quiz-pergunta">Qual o parentesco do responsável com o atleta?</h2>
+      <select id="q11" class="quiz-select">
+        <option value="">Selecione o parentesco...</option>
+        <option value="Pai">Pai</option>
+        <option value="Mãe">Mãe</option>
+        <option value="Avô/Avó">Avô/Avó</option>
+        <option value="Tio/Tia">Tio/Tia</option>
+        <option value="Outro">Outro</option>
+      </select>
+      <div class="quiz-erro" id="erro-q11">Por favor, selecione o parentesco.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(11)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(11)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q12 — Doença diagnosticada ══ -->
+    <div class="quiz-card" id="card-12">
+      <div class="quiz-numero">Pergunta 12 de 16</div>
+      <h2 class="quiz-pergunta">O atleta possui alguma doença diagnosticada?</h2>
+      <div class="quiz-opcoes">
+        <button class="quiz-opcao-btn" data-valor="Sim" onclick="selecionarOpcao('q12', 'Sim', this)">Sim</button>
+        <button class="quiz-opcao-btn" data-valor="Não" onclick="selecionarOpcao('q12', 'Não', this)">Não</button>
+      </div>
+      <input type="hidden" id="q12" value="">
+      <div class="quiz-condicional" id="cond-q12">
+        <label for="q12desc">Qual doença?</label>
+        <input type="text" id="q12desc" class="quiz-input" placeholder="Descreva a doença...">
+      </div>
+      <div class="quiz-erro" id="erro-q12">Por favor, responda esta pergunta.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(12)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(12)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q13 — Problemas cardíacos ══ -->
+    <div class="quiz-card" id="card-13">
+      <div class="quiz-numero">Pergunta 13 de 16</div>
+      <h2 class="quiz-pergunta">O atleta já teve problemas cardíacos?</h2>
+      <div class="quiz-opcoes">
+        <button class="quiz-opcao-btn" data-valor="Sim" onclick="selecionarOpcao('q13', 'Sim', this)">Sim</button>
+        <button class="quiz-opcao-btn" data-valor="Não" onclick="selecionarOpcao('q13', 'Não', this)">Não</button>
+      </div>
+      <input type="hidden" id="q13" value="">
+      <div class="quiz-condicional" id="cond-q13">
+        <label for="q13desc">Descreva brevemente:</label>
+        <input type="text" id="q13desc" class="quiz-input" placeholder="Descreva o problema cardíaco...">
+      </div>
+      <div class="quiz-erro" id="erro-q13">Por favor, responda esta pergunta.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(13)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(13)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q14 — Desmaio durante exercício ══ -->
+    <div class="quiz-card" id="card-14">
+      <div class="quiz-numero">Pergunta 14 de 16</div>
+      <h2 class="quiz-pergunta">O atleta já desmaiou durante exercício físico?</h2>
+      <div class="quiz-opcoes">
+        <button class="quiz-opcao-btn" data-valor="Sim" onclick="selecionarOpcao('q14', 'Sim', this)">Sim</button>
+        <button class="quiz-opcao-btn" data-valor="Não" onclick="selecionarOpcao('q14', 'Não', this)">Não</button>
+      </div>
+      <input type="hidden" id="q14" value="">
+      <div class="quiz-erro" id="erro-q14">Por favor, responda esta pergunta.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(14)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(14)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q15 — Remédio contínuo ══ -->
+    <div class="quiz-card" id="card-15">
+      <div class="quiz-numero">Pergunta 15 de 16</div>
+      <h2 class="quiz-pergunta">O atleta usa algum remédio de uso contínuo?</h2>
+      <div class="quiz-opcoes">
+        <button class="quiz-opcao-btn" data-valor="Sim" onclick="selecionarOpcao('q15', 'Sim', this)">Sim</button>
+        <button class="quiz-opcao-btn" data-valor="Não" onclick="selecionarOpcao('q15', 'Não', this)">Não</button>
+      </div>
+      <input type="hidden" id="q15" value="">
+      <div class="quiz-condicional" id="cond-q15">
+        <label for="q15desc">Qual medicamento?</label>
+        <input type="text" id="q15desc" class="quiz-input" placeholder="Nome do medicamento...">
+      </div>
+      <div class="quiz-erro" id="erro-q15">Por favor, responda esta pergunta.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(15)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="proximaQ(15)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      </div>
+    </div>
+
+    <!-- ══ Q16 — Restrição médica ══ -->
+    <div class="quiz-card" id="card-16">
+      <div class="quiz-numero">Pergunta 16 de 16</div>
+      <h2 class="quiz-pergunta">O atleta possui restrição médica para atividade física?</h2>
+      <div class="quiz-opcoes">
+        <button class="quiz-opcao-btn" data-valor="Sim" onclick="selecionarOpcao('q16', 'Sim', this)">Sim</button>
+        <button class="quiz-opcao-btn" data-valor="Não" onclick="selecionarOpcao('q16', 'Não', this)">Não</button>
+      </div>
+      <input type="hidden" id="q16" value="">
+      <div class="quiz-condicional" id="cond-q16">
+        <label for="q16desc">Qual restrição?</label>
+        <input type="text" id="q16desc" class="quiz-input" placeholder="Descreva a restrição...">
+      </div>
+      <div class="quiz-erro" id="erro-q16">Por favor, responda esta pergunta.</div>
+      <div class="quiz-nav">
+        <button class="btn-anterior" onclick="anteriorQ(16)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
+        <button class="btn btn-dourado" onclick="finalizarQuiz()">
+          Finalizar <i class="fas fa-check" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+  </div><!-- fim .quiz-container -->
+
+  <!-- Selo de segurança — visível durante todo o quiz -->
+  <div class="quiz-selo-seguranca" id="quizSeloSeguranca">
+    <div class="selo-item">
+      <i class="fas fa-lock" aria-hidden="true"></i>
+      <span>Sessão Segura</span>
+    </div>
+    <div class="selo-divider" aria-hidden="true"></div>
+    <div class="selo-item">
+      <i class="fas fa-shield-alt" aria-hidden="true"></i>
+      <span>Dados Sigilosos</span>
+    </div>
+    <div class="selo-divider" aria-hidden="true"></div>
+    <div class="selo-item">
+      <i class="fas fa-user-shield" aria-hidden="true"></i>
+      <span>Privacidade Protegida</span>
+    </div>
+  </div>
+
+  <!-- ===== TELA DE ANÁLISE (overlay full-screen) ===== -->
+  <div class="analise-tela" id="analiseTela" aria-live="assertive" role="status">
+    <div class="escudo-icon" aria-hidden="true">
+      <i class="fas fa-shield-alt"></i>
+    </div>
+    <div class="analise-texto" id="analiseTexto">Analisando informações...</div>
+    <div class="analise-dots" aria-hidden="true">
+      <div class="analise-dot"></div>
+      <div class="analise-dot"></div>
+      <div class="analise-dot"></div>
+    </div>
+  </div>
+
+  <!-- ===== TELA DE APROVAÇÃO (overlay full-screen) ===== -->
+  <div class="aprovacao-tela" id="aprovacaoTela" aria-live="polite">
+    <div class="aprovacao-check" aria-hidden="true">
+      <i class="fas fa-check"></i>
+    </div>
+    <h2 class="aprovacao-titulo" id="aprovacaoTitulo">
+      Atleta está apto para participar da peneira!
+    </h2>
+    <p class="aprovacao-subtitulo">Suas informações foram analisadas com sucesso.</p>
+    <div class="badge-aprovado">
+      <i class="fas fa-check-circle" aria-hidden="true"></i>
+      APROVADO
+    </div>
+    <button class="btn btn-dourado btn-grande" id="btnContinuarAgendamento">
+      CONTINUAR PARA AGENDAMENTO <i class="fas fa-arrow-right" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <!-- ===== ETAPA 3 — AGENDAMENTO (aparece após aprovação) ===== -->
+  <div class="agendamento-section" id="agendamentoSection">
+    <div class="agendamento-card">
+      <h3><i class="far fa-calendar-check" style="color:var(--dourado);margin-right:8px" aria-hidden="true"></i>Escolha seu horário</h3>
+
+      <!-- Badge de cidade selecionada -->
+      <div style="text-align:center;margin-bottom:24px">
+        <div class="badge-cidade" id="agendBadgeCidade">
+          <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+          <span id="agendCidadeNome">—</span>
+        </div>
+      </div>
+
+      <!-- Dropdown de cidades (caso não haja cidade no localStorage) -->
+      <div id="cidadeDropdownWrap" style="display:none;margin-bottom:20px">
+        <div class="input-grupo">
+          <label for="agendCidadeSelect">Selecione a cidade</label>
+          <select id="agendCidadeSelect" class="quiz-select"></select>
+        </div>
+      </div>
+
+      <!-- Data do evento (fixo) -->
+      <div class="data-evento">
+        <div class="data-label">Data do evento</div>
+        <div class="data-valor">Domingo, 14 de junho de 2026</div>
+      </div>
+
+      <!-- Horários disponíveis -->
+      <div class="horarios-titulo">Selecione o horário:</div>
+      <div class="horarios-grid" id="horariosGrid" style="grid-template-columns:1fr 1fr">
+        <button class="horario-btn" data-horario="09:00" onclick="selecionarHorario(this)">09:00</button>
+        <button class="horario-btn" data-horario="14:00" onclick="selecionarHorario(this)">14:00</button>
+      </div>
+      <div class="quiz-erro" id="erro-horario" style="display:none">Por favor, selecione um horário.</div>
+
+      <button class="btn btn-azul btn-grande" id="btnConfirmarAgendamento" style="width:100%">
+        CONFIRMAR AGENDAMENTO <i class="fas fa-arrow-right" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== ETAPA 4 — RESUMO E PAGAMENTO ===== -->
+  <div class="resumo-section" id="resumoSection">
+    <div class="resumo-card">
+
+      <div class="resumo-header">
+        <h3>Confirme sua inscrição</h3>
+        <p>Revise os dados antes de finalizar</p>
+      </div>
+
+      <div class="resumo-body">
+        <div class="resumo-linha">
+          <span class="label">Atleta</span>
+          <span class="valor" id="resumoAtleta">—</span>
+        </div>
+        <div class="resumo-linha">
+          <span class="label">Responsável</span>
+          <span class="valor" id="resumoResponsavel">—</span>
+        </div>
+        <div class="resumo-linha">
+          <span class="label">E-mail</span>
+          <span class="valor" id="resumoEmail">—</span>
+        </div>
+        <div class="resumo-linha">
+          <span class="label">Posição</span>
+          <span class="valor" id="resumoPosicao">—</span>
+        </div>
+        <div class="resumo-linha">
+          <span class="label">Cidade</span>
+          <span class="valor" id="resumoCidade">—</span>
+        </div>
+        <div class="resumo-linha">
+          <span class="label">Data</span>
+          <span class="valor">14 de junho de 2026 (domingo)</span>
+        </div>
+        <div class="resumo-linha">
+          <span class="label">Idade</span>
+          <span class="valor" id="resumoIdade">—</span>
+        </div>
+        <div class="resumo-linha">
+          <span class="label">Horário</span>
+          <span class="valor" id="resumoHorario">—</span>
+        </div>
+
+        <div class="resumo-divisor" aria-hidden="true"></div>
+
+        <div class="resumo-valor-total">
+          <span class="taxa-label">Taxa de inscrição:</span>
+          <span class="taxa-valor">R$ 79,90</span>
+        </div>
+
+        <div class="resumo-botoes" id="resumoBotoes">
+          <a href="https://checkout.realacademybrazil.online/VCCL1O8SCWAN" target="_blank" rel="noopener noreferrer"
+             class="btn btn-grande" id="btnFinalizar" style="width:100%; background:#C8A84B; color:#001489; border:none; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-weight:700;">
+            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            GARANTIR MINHA VAGA
+          </a>
+          <p class="pix-aviso-abaixo" style="margin-top:16px;">
+            <i class="fas fa-info-circle"></i>
+            Próximo à data do evento, todas as informações sobre documentação, preparativos, local e credencial do atleta serão enviadas ao e-mail cadastrado.
+          </p>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p><strong>Real Academy Brasil</strong> | Evento esportivo oficial</p>
+    <p>Este é um evento independente de captação de talentos</p>
+  </footer>
+
+  <!-- ===== BOTÃO WHATSAPP FLUTUANTE ===== -->
+  <a href="https://wa.me/5500000000000" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <script>
+    /* Menu mobile */
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu    = document.getElementById('navMenu');
+    menuToggle.addEventListener('click', function () {
+      const aberto = navMenu.classList.toggle('aberto');
+      menuToggle.setAttribute('aria-expanded', aberto);
+    });
+  </script>
+  <script src="js/quiz.js"></script>
+  <script src="js/agendamento.js"></script>
+</body>
+</html>
