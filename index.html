@@ -56,13 +56,17 @@
         <span class="hdr-marca-nome">Real Academy Brasil</span>
       </div>
       <nav>
-        <ul class="hdr-nav">
+        <ul class="hdr-nav" id="hdrNav">
           <li><a href="#como-funciona">Como Funciona</a></li>
           <li><a href="cidades.html">Cidades</a></li>
           <li><a href="inscricao.html">Inscrição</a></li>
+          <li class="hdr-nav-cta-mobile"><a href="fila.html">Inscreva-se</a></li>
         </ul>
       </nav>
       <button class="hdr-cta" id="btnHdrCta">Inscreva-se</button>
+      <button class="hdr-hamburger" id="hdrHamburger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
@@ -271,6 +275,22 @@
     window.addEventListener('scroll', function () {
       hdr.classList.toggle('scrollado', window.scrollY > 80);
     }, { passive: true });
+
+    /* ---- HAMBURGUER MOBILE ---- */
+    var hamburger = document.getElementById('hdrHamburger');
+    var hdrNav    = document.getElementById('hdrNav');
+    hamburger.addEventListener('click', function () {
+      var aberto = hdrNav.classList.toggle('aberto');
+      hamburger.classList.toggle('aberto', aberto);
+      hamburger.setAttribute('aria-expanded', aberto);
+    });
+    hdrNav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        hdrNav.classList.remove('aberto');
+        hamburger.classList.remove('aberto');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
 
     /* ---- BOTÕES ---- */
     document.getElementById('btnHdrCta').addEventListener('click', function () {
