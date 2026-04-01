@@ -122,57 +122,82 @@
     <i class="fab fa-whatsapp" aria-hidden="true"></i>
   </a>
 
-  <!-- ===== PLAYER DE MÚSICA (Seven Nation Army) ===== -->
-  <button id="btnMusicaFila" aria-label="Silenciar música" title="Silenciar música" style="
+  <!-- ===== PLAYER DE MÚSICA — apenas na fila ===== -->
+  <button id="btnMusicaFila" aria-label="Ativar música" title="Clique para ativar a música" style="
     position:fixed; bottom:28px; left:28px; z-index:999;
     width:44px; height:44px; border-radius:50%;
     background:rgba(0,20,137,0.85); border:1px solid rgba(200,168,75,0.5);
     color:#C8A84B; font-size:1.1rem; cursor:pointer;
     display:flex; align-items:center; justify-content:center;
     backdrop-filter:blur(8px); transition:all 0.2s;
+    opacity:0.6;
+    animation: pulsoMusica 2s ease-in-out infinite;
   ">
-    <i class="fas fa-music" id="iconMusica"></i>
+    <i class="fas fa-volume-mute" id="iconMusica"></i>
   </button>
-  <div id="ytPlayer" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;pointer-events:none;"></div>
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    var player;
-    var musicaMutada = false;
 
-    function onYouTubeIframeAPIReady() {
+  <style>
+    @keyframes pulsoMusica {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(200,168,75,0.4); }
+      50%       { box-shadow: 0 0 0 8px rgba(200,168,75,0); }
+    }
+  </style>
+
+  <!-- iframe escondido — YouTube API -->
+  <div id="ytPlayerWrap" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;top:0;left:0;">
+    <div id="ytPlayer"></div>
+  </div>
+
+  <script>
+    /* Carrega a API do YouTube só na fila */
+    (function() {
+      var tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    })();
+
+    var player;
+    var musicaAtiva = false;
+
+    window.onYouTubeIframeAPIReady = function() {
       player = new YT.Player('ytPlayer', {
+        width: '1', height: '1',
         videoId: '0fKBW7KxY2w',
         playerVars: {
-          autoplay: 1,
-          loop: 1,
+          autoplay: 1, loop: 1,
           playlist: '0fKBW7KxY2w',
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          modestbranding: 1
+          controls: 0, disablekb: 1, fs: 0
         },
         events: {
           onReady: function(e) {
-            e.target.setVolume(60);
+            /* Começa mutado — browsers bloqueiam autoplay com som */
+            e.target.mute();
             e.target.playVideo();
           }
         }
       });
-    }
+    };
 
     document.getElementById('btnMusicaFila').addEventListener('click', function () {
-      if (!player) return;
-      if (musicaMutada) {
+      if (!player || typeof player.unMute !== 'function') return;
+      var btn  = this;
+      var icon = document.getElementById('iconMusica');
+
+      if (!musicaAtiva) {
         player.unMute();
         player.setVolume(60);
-        document.getElementById('iconMusica').className = 'fas fa-music';
-        this.style.opacity = '1';
-        musicaMutada = false;
+        icon.className = 'fas fa-music';
+        btn.style.opacity = '1';
+        btn.style.animation = 'none';
+        btn.title = 'Silenciar música';
+        musicaAtiva = true;
       } else {
         player.mute();
-        document.getElementById('iconMusica').className = 'fas fa-volume-mute';
-        this.style.opacity = '0.5';
-        musicaMutada = true;
+        icon.className = 'fas fa-volume-mute';
+        btn.style.opacity = '0.6';
+        btn.style.animation = 'pulsoMusica 2s ease-in-out infinite';
+        btn.title = 'Ativar música';
+        musicaAtiva = false;
       }
     });
   </script>
