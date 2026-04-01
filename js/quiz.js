@@ -15,6 +15,48 @@ var idadeAtleta   = 0; /* calculada em Q3, controla se Q11 é exibida */
 var barraProg  = document.getElementById('barraProg');
 var etapaTexto = document.getElementById('etapaTexto');
 
+/* ── Dados de cidades (carregado uma vez) ───────────────────────── */
+var _cidadesData = [];
+fetch('data/cidades.json')
+  .then(function(r) { return r.json(); })
+  .then(function(d) { _cidadesData = d; })
+  .catch(function() {});
+
+function popularCidades() {
+  var estado     = document.getElementById('q8-estado').value;
+  var selCidade  = document.getElementById('q8-cidade');
+  selCidade.innerHTML = '';
+
+  if (!estado) {
+    selCidade.innerHTML = '<option value="">Selecione primeiro o estado</option>';
+    selCidade.disabled = true;
+    return;
+  }
+
+  var cidades = _cidadesData
+    .filter(function(c) { return c.estado === estado; })
+    .sort(function(a, b) { return a.cidade.localeCompare(b.cidade, 'pt-BR'); });
+
+  if (cidades.length === 0) {
+    selCidade.innerHTML = '<option value="">Nenhuma cidade disponível no seu estado</option>';
+    selCidade.disabled = true;
+    return;
+  }
+
+  var defaultOpt = document.createElement('option');
+  defaultOpt.value = '';
+  defaultOpt.textContent = 'Selecione a cidade';
+  selCidade.appendChild(defaultOpt);
+
+  cidades.forEach(function(c) {
+    var opt = document.createElement('option');
+    opt.value = c.cidade;
+    opt.textContent = c.cidade;
+    selCidade.appendChild(opt);
+  });
+  selCidade.disabled = false;
+}
+
 /* ── Utilitários ─────────────────────────────────────────────────── */
 function esconderErro(id) {
   var el = document.getElementById('erro-' + id);
@@ -205,15 +247,20 @@ function validarQ(n) {
       return true;
     }
 
-    /* Q8 — Cidade: mínimo 3 letras */
+    /* Q8 — Estado e cidade */
     case 8: {
-      var cidade = document.getElementById('q8a').value.trim();
-      if (cidade.replace(/\s/g, '').length < 3) {
-        mostrarErroMsg('q8', 'O nome da cidade deve ter pelo menos 3 letras.');
+      var estado = document.getElementById('q8-estado').value;
+      var cidade = document.getElementById('q8-cidade').value;
+      if (!estado) {
+        mostrarErroMsg('q8', 'Por favor, selecione o estado.');
         return false;
       }
+      if (!cidade) {
+        mostrarErroMsg('q8', 'Por favor, selecione a cidade.');
+        return false;
+      }
+      dadosAtleta.estado      = estado;
       dadosAtleta.cidadeAtleta = cidade;
-      dadosAtleta.bairroAtleta = document.getElementById('q8b').value.trim();
       return true;
     }
 
@@ -302,7 +349,7 @@ function validarQ(n) {
 }
 
 /* ── Persistência de progresso ───────────────────────────────────── */
-var CAMPOS_TEXTO = ['q1','q2','q3','q4a','q4b','q5','q6','q8a','q8b','q9','q10','q10conf','q11','q12desc','q13desc','q15desc','q16desc'];
+var CAMPOS_TEXTO = ['q1','q2','q3','q4a','q4b','q5','q6','q8-estado','q9','q10','q10conf','q11','q12desc','q13desc','q15desc','q16desc'];
 var CAMPOS_HIDDEN = ['q7','q12','q13','q14','q15','q16'];
 
 function salvarProgresso() {
@@ -347,6 +394,22 @@ function restaurarProgresso() {
         }
       });
     });
+
+    /* Restaurar cidade (select dinâmico — depende de _cidadesData estar carregado) */
+    var _estadoSalvo = prog.campos && prog.campos['q8-estado'];
+    var _cidadeSalva = prog.dados && prog.dados.cidadeAtleta;
+    if (_estadoSalvo) {
+      var _tentarRestaurarCidade = function() {
+        if (_cidadesData.length > 0) {
+          popularCidades();
+          var selC = document.getElementById('q8-cidade');
+          if (selC && _cidadeSalva) selC.value = _cidadeSalva;
+        } else {
+          setTimeout(_tentarRestaurarCidade, 100);
+        }
+      };
+      _tentarRestaurarCidade();
+    }
 
     /* Navegar para a questão salva */
     questaoAtual = prog.q;
@@ -420,11 +483,12 @@ function finalizarQuiz() {
   localStorage.removeItem('quiz_progresso');
 
   /* Enviar lead para Google Sheets (silencioso — não bloqueia o fluxo) */
+  /* Content-Type: text/plain evita preflight CORS no Apps Script com no-cors */
   try {
     fetch(SHEETS_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(dadosAtleta)
     });
   } catch (e) { /* falha silenciosa */ }
@@ -494,16 +558,32 @@ document.getElementById('btnContinuarAgendamento').addEventListener('click', fun
 });
 
 /* ── Máscara de telefone (00) 00000-0000 ─────────────────────────── */
+function _formatarTelefone(digits) {
+  var m = '';
+  if (digits.length > 0) m = '(' + digits.substring(0, 2);
+  if (digits.length >= 2) m += ') ';
+  if (digits.length >= 3) m += digits.substring(2, 7);
+  if (digits.length >= 7) m += '-' + digits.substring(7, 11);
+  return m;
+}
+
 document.getElementById('q9').addEventListener('input', function () {
+  var cursor = this.selectionStart;
+  /* Conta quantos dígitos havia antes do cursor (posição lógica) */
+  var digitsAntes = this.value.substring(0, cursor).replace(/\D/g, '').length;
+
   var digits = this.value.replace(/\D/g, '').slice(0, 11);
-  var masked = '';
-
-  if (digits.length > 0) masked = '(' + digits.substring(0, 2);
-  if (digits.length >= 2) masked += ') ';
-  if (digits.length >= 3) masked += digits.substring(2, 7);
-  if (digits.length >= 7) masked += '-' + digits.substring(7, 11);
-
+  var masked = _formatarTelefone(digits);
   this.value = masked;
+
+  /* Reposiciona o cursor após o mesmo número de dígitos */
+  var novoCursor = 0;
+  var digitosVistos = 0;
+  while (novoCursor < masked.length && digitosVistos < digitsAntes) {
+    if (/\d/.test(masked[novoCursor])) digitosVistos++;
+    novoCursor++;
+  }
+  this.setSelectionRange(novoCursor, novoCursor);
 });
 
 /* ── Cálculo de idade em tempo real (Q3) ─────────────────────────── */
@@ -577,8 +657,13 @@ document.addEventListener('DOMContentLoaded', function () {
     if (cidadeSalva) {
       try {
         var obj = JSON.parse(cidadeSalva);
-        var inputCidade = document.getElementById('q8a');
-        if (inputCidade && obj.cidade) inputCidade.value = obj.cidade;
+        var selEstado = document.getElementById('q8-estado');
+        if (selEstado && obj.estado) {
+          selEstado.value = obj.estado;
+          popularCidades();
+          var selCidade = document.getElementById('q8-cidade');
+          if (selCidade && obj.cidade) selCidade.value = obj.cidade;
+        }
       } catch (e) {}
     }
     atualizarProgresso(1);

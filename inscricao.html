@@ -178,21 +178,52 @@
       </div>
     </div>
 
-    <!-- ══ Q8 — Cidade e bairro ══ -->
+    <!-- ══ Q8 — Estado e Cidade ══ -->
     <div class="quiz-card" id="card-8">
       <div class="quiz-numero">Pergunta 8 de 16</div>
-      <h2 class="quiz-pergunta">Qual é a cidade e o bairro do atleta?</h2>
+      <h2 class="quiz-pergunta">Em qual cidade o atleta deseja participar da peneira?</h2>
       <div class="quiz-input-row">
         <div class="quiz-input-grupo">
-          <label for="q8a">Cidade</label>
-          <input type="text" id="q8a" class="quiz-input" placeholder="Ex: São Paulo" autocomplete="address-level2">
+          <label for="q8-estado">Estado</label>
+          <select id="q8-estado" class="quiz-select" onchange="popularCidades()">
+            <option value="">Selecione o estado</option>
+            <option value="AC">AC — Acre</option>
+            <option value="AL">AL — Alagoas</option>
+            <option value="AP">AP — Amapá</option>
+            <option value="AM">AM — Amazonas</option>
+            <option value="BA">BA — Bahia</option>
+            <option value="CE">CE — Ceará</option>
+            <option value="DF">DF — Distrito Federal</option>
+            <option value="ES">ES — Espírito Santo</option>
+            <option value="GO">GO — Goiás</option>
+            <option value="MA">MA — Maranhão</option>
+            <option value="MT">MT — Mato Grosso</option>
+            <option value="MS">MS — Mato Grosso do Sul</option>
+            <option value="MG">MG — Minas Gerais</option>
+            <option value="PA">PA — Pará</option>
+            <option value="PB">PB — Paraíba</option>
+            <option value="PR">PR — Paraná</option>
+            <option value="PE">PE — Pernambuco</option>
+            <option value="PI">PI — Piauí</option>
+            <option value="RJ">RJ — Rio de Janeiro</option>
+            <option value="RN">RN — Rio Grande do Norte</option>
+            <option value="RS">RS — Rio Grande do Sul</option>
+            <option value="RO">RO — Rondônia</option>
+            <option value="RR">RR — Roraima</option>
+            <option value="SC">SC — Santa Catarina</option>
+            <option value="SP">SP — São Paulo</option>
+            <option value="SE">SE — Sergipe</option>
+            <option value="TO">TO — Tocantins</option>
+          </select>
         </div>
         <div class="quiz-input-grupo">
-          <label for="q8b">Bairro</label>
-          <input type="text" id="q8b" class="quiz-input" placeholder="Ex: Centro" autocomplete="address-level3">
+          <label for="q8-cidade">Cidade</label>
+          <select id="q8-cidade" class="quiz-select" disabled>
+            <option value="">Selecione primeiro o estado</option>
+          </select>
         </div>
       </div>
-      <div class="quiz-erro" id="erro-q8">Por favor, preencha a cidade.</div>
+      <div class="quiz-erro" id="erro-q8">Por favor, selecione o estado e a cidade.</div>
       <div class="quiz-nav">
         <button class="btn-anterior" onclick="anteriorQ(8)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
         <button class="btn btn-dourado" onclick="proximaQ(8)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
