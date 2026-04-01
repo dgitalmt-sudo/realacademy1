@@ -82,7 +82,7 @@ function irParaCard(de, para) {
   setTimeout(function () {
     cardDe.classList.remove('ativo', 'saindo');
     cardPara.classList.add('ativo');
-    window.scrollTo({ top: 80, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 280);
 }
 
@@ -98,7 +98,7 @@ function voltarParaCard(de, para) {
     cardPara.style.animation = 'slideInLeft 0.35s ease';
     cardPara.classList.add('ativo');
     setTimeout(function () { cardPara.style.animation = ''; }, 360);
-    window.scrollTo({ top: 80, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 280);
 }
 
