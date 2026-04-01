@@ -140,9 +140,6 @@ function mostrarResultado(cidade, distancia, tempo) {
   setTimeout(function () {
     section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 100);
-
-  /* Iniciar contagem regressiva de vagas: 30 → 1, decrementa a cada ~12s */
-  iniciarContagemVagas();
 }
 
 /* ── Contagem regressiva de vagas restantes ──────────────────────
@@ -185,31 +182,25 @@ function iniciarContagemVagas() {
 
 /* ── Eventos de botões ─────────────────────────────────────────── */
 
-/* Botão "Verificar Disponibilidade" */
+/* Botão "Verificar Cidade Mais Próxima" */
 document.getElementById('btnBuscar').addEventListener('click', function () {
-  var nome   = document.getElementById('inputCidade').value.trim();
   var estado = document.getElementById('selectEstado').value;
   var idade  = document.getElementById('selectIdade').value;
 
   /* Salvar idade informada para uso nas próximas etapas */
   if (idade) localStorage.setItem('idade_atleta_busca', idade);
 
-  if (!nome && !estado) {
-    alert('Por favor, informe o nome de uma cidade ou selecione um estado.');
+  if (!estado || !idade) {
+    alert('Por favor, selecione o estado e a idade do atleta.');
     return;
   }
 
-  var cidade = buscarPorNome(nome, estado);
+  var cidade = buscarPorNome('', estado);
   if (cidade) {
     mostrarResultado(cidade, null, null);
   } else {
-    alert('Nenhuma cidade encontrada. Tente com outro nome ou estado.');
+    alert('Nenhuma cidade encontrada para este estado.');
   }
-});
-
-/* Enter no input de cidade */
-document.getElementById('inputCidade').addEventListener('keypress', function (e) {
-  if (e.key === 'Enter') document.getElementById('btnBuscar').click();
 });
 
 /* Botão "Usar minha localização" */

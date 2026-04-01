@@ -56,51 +56,42 @@
     <div class="busca-card">
       <h3>
         <i class="fas fa-search-location" style="color:var(--dourado);margin-right:8px" aria-hidden="true"></i>
-        Verificar Disponibilidade
+        Verificar cidade mais próxima de você
       </h3>
       <div class="busca-form" role="search">
 
-        <div class="busca-row">
-          <div class="input-grupo">
-            <label for="inputCidade">Cidade</label>
-            <input
-              type="text" id="inputCidade" class="input-campo"
-              placeholder="Coloque sua cidade aqui" autocomplete="off"
-              aria-label="Nome da cidade">
-          </div>
-          <div class="input-grupo">
-            <label for="selectEstado">Estado</label>
-            <select id="selectEstado" class="input-campo" aria-label="Selecionar estado">
-              <option value="">Selecione o seu estado</option>
-              <option value="AC">AC — Acre</option>
-              <option value="AL">AL — Alagoas</option>
-              <option value="AM">AM — Amazonas</option>
-              <option value="AP">AP — Amapá</option>
-              <option value="BA">BA — Bahia</option>
-              <option value="CE">CE — Ceará</option>
-              <option value="DF">DF — Distrito Federal</option>
-              <option value="ES">ES — Espírito Santo</option>
-              <option value="GO">GO — Goiás</option>
-              <option value="MA">MA — Maranhão</option>
-              <option value="MG">MG — Minas Gerais</option>
-              <option value="MS">MS — Mato Grosso do Sul</option>
-              <option value="MT">MT — Mato Grosso</option>
-              <option value="PA">PA — Pará</option>
-              <option value="PB">PB — Paraíba</option>
-              <option value="PE">PE — Pernambuco</option>
-              <option value="PI">PI — Piauí</option>
-              <option value="PR">PR — Paraná</option>
-              <option value="RJ">RJ — Rio de Janeiro</option>
-              <option value="RN">RN — Rio Grande do Norte</option>
-              <option value="RO">RO — Rondônia</option>
-              <option value="RR">RR — Roraima</option>
-              <option value="RS">RS — Rio Grande do Sul</option>
-              <option value="SC">SC — Santa Catarina</option>
-              <option value="SE">SE — Sergipe</option>
-              <option value="SP">SP — São Paulo</option>
-              <option value="TO">TO — Tocantins</option>
-            </select>
-          </div>
+        <div class="input-grupo">
+          <label for="selectEstado">Estado</label>
+          <select id="selectEstado" class="input-campo" aria-label="Selecionar estado">
+            <option value="">Selecione o seu estado</option>
+            <option value="AC">AC — Acre</option>
+            <option value="AL">AL — Alagoas</option>
+            <option value="AM">AM — Amazonas</option>
+            <option value="AP">AP — Amapá</option>
+            <option value="BA">BA — Bahia</option>
+            <option value="CE">CE — Ceará</option>
+            <option value="DF">DF — Distrito Federal</option>
+            <option value="ES">ES — Espírito Santo</option>
+            <option value="GO">GO — Goiás</option>
+            <option value="MA">MA — Maranhão</option>
+            <option value="MG">MG — Minas Gerais</option>
+            <option value="MS">MS — Mato Grosso do Sul</option>
+            <option value="MT">MT — Mato Grosso</option>
+            <option value="PA">PA — Pará</option>
+            <option value="PB">PB — Paraíba</option>
+            <option value="PE">PE — Pernambuco</option>
+            <option value="PI">PI — Piauí</option>
+            <option value="PR">PR — Paraná</option>
+            <option value="RJ">RJ — Rio de Janeiro</option>
+            <option value="RN">RN — Rio Grande do Norte</option>
+            <option value="RO">RO — Rondônia</option>
+            <option value="RR">RR — Roraima</option>
+            <option value="RS">RS — Rio Grande do Sul</option>
+            <option value="SC">SC — Santa Catarina</option>
+            <option value="SE">SE — Sergipe</option>
+            <option value="SP">SP — São Paulo</option>
+            <option value="TO">TO — Tocantins</option>
+          </select>
         </div>
 
         <div class="input-grupo">
@@ -124,7 +115,7 @@
 
         <button class="btn btn-azul" id="btnBuscar" style="width:100%" type="button">
           <i class="fas fa-search" aria-hidden="true"></i>
-          VERIFICAR DISPONIBILIDADE
+          VERIFICAR CIDADE MAIS PRÓXIMA DE VOCÊ
         </button>
 
         <div class="link-localizacao" id="btnLocalizacao" role="button" tabindex="0" aria-label="Usar minha localização atual">
@@ -173,11 +164,6 @@
         </div>
 
         <div class="resultado-divider" aria-hidden="true"></div>
-
-        <div class="alerta-vagas" aria-live="polite" id="alertaVagas">
-          <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-          Vagas restantes: <strong id="vagasContador">30</strong>
-        </div>
 
         <button class="btn btn-dourado btn-grande" id="btnInscrever" style="width:100%" type="button">
           FAZER MINHA INSCRIÇÃO AGORA &nbsp;<i class="fas fa-arrow-right" aria-hidden="true"></i>
