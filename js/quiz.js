@@ -412,10 +412,23 @@ function selecionarOpcao(campo, valor, btn) {
 }
 
 /* ── Finalizar quiz ──────────────────────────────────────────────── */
+var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx1zPy44elS_VbKu5HScFLgprawGsx7w9S0a0pUmP8YAY2Ue1PbMMlfW4NjX0HAmvHF/exec';
+
 function finalizarQuiz() {
   if (!validarQ(16)) return;
   localStorage.setItem('dadosAtleta', JSON.stringify(dadosAtleta));
   localStorage.removeItem('quiz_progresso');
+
+  /* Enviar lead para Google Sheets (silencioso — não bloqueia o fluxo) */
+  try {
+    fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dadosAtleta)
+    });
+  } catch (e) { /* falha silenciosa */ }
+
   iniciarAnalise();
 }
 
