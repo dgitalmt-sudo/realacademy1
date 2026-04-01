@@ -475,7 +475,7 @@ function selecionarOpcao(campo, valor, btn) {
 }
 
 /* ── Finalizar quiz ──────────────────────────────────────────────── */
-var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx1zPy44elS_VbKu5HScFLgprawGsx7w9S0a0pUmP8YAY2Ue1PbMMlfW4NjX0HAmvHF/exec';
+var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwsg9OcKxta73HBWatXysD0vUzBV2rd-uioA2uQyu1BId3YKEBDKExENEgwEgV_7Wln/exec';
 
 function finalizarQuiz() {
   if (!validarQ(16)) return;
