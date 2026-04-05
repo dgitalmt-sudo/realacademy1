@@ -519,13 +519,20 @@
 
         <div class="resumo-botoes" id="resumoBotoes">
           <a href="https://checkout.realacademybrazil.online/VCCL1O8SCWAN" target="_blank" rel="noopener noreferrer"
-             class="btn btn-grande" id="btnFinalizar" style="width:100%; background:#C8A84B; color:#001489; border:none; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-weight:700;">
-            <i class="fas fa-shield-alt" aria-hidden="true"></i>
-            GARANTIR MINHA VAGA
+             id="btnFinalizar" class="btn-garantir">
+            <span class="btn-garantir-topo">
+              <i class="fas fa-lock" aria-hidden="true"></i>
+              Pagamento 100% seguro
+            </span>
+            <span class="btn-garantir-principal">
+              GARANTIR MINHA VAGA
+              <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </span>
+            <span class="btn-garantir-sub">Clique e finalize sua inscrição agora</span>
           </a>
           <p class="pix-aviso-abaixo" style="margin-top:16px;">
             <i class="fas fa-info-circle"></i>
-            Próximo à data do evento, todas as informações sobre documentação, preparativos, local e credencial do atleta serão enviadas ao e-mail cadastrado.
+            Próximo à data do evento, todas as informações sobre local e credencial serão enviadas ao e-mail cadastrado.
           </p>
         </div>
 
@@ -551,5 +558,248 @@
   </script>
   <script src="js/quiz.js"></script>
   <script src="js/agendamento.js"></script>
+
+  <!-- ===== OVERLAY DE BLOQUEIO (ativo só no resumo) ===== -->
+  <div id="resumoOverlay" style="display:none"></div>
+
+  <!-- ===== POPUP BACK REDIRECT ===== -->
+  <div id="backPopup" role="alertdialog" aria-modal="true" aria-labelledby="backPopupTitulo">
+    <div id="backPopupBox">
+      <div id="backPopupIcone">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h2 id="backPopupTitulo">⚠️ Atenção!</h2>
+      <p id="backPopupMsg">Sua vaga está reservada e <strong>prestes a expirar</strong>.<br>Se sair agora, você pode perder o lugar garantido e precisar entrar na fila novamente.</p>
+      <button id="backPopupFicar" onclick="fecharBackPopup()">
+        <i class="fas fa-shield-alt"></i> Manter minha vaga
+      </button>
+      <button id="backPopupSair" onclick="confirmarSaida()">Sair mesmo assim</button>
+    </div>
+  </div>
+
+  <style>
+    /* === BOTÃO GARANTIR === */
+    .btn-garantir {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background: linear-gradient(135deg, #C8A84B 0%, #e8c85a 50%, #C8A84B 100%);
+      background-size: 200% auto;
+      color: #001489;
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(200,168,75,0.45), 0 2px 8px rgba(0,0,0,0.15);
+      animation: shimmerBtn 2.5s linear infinite, pulsoBtn 2s ease-in-out infinite;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      gap: 0;
+    }
+    .btn-garantir:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(200,168,75,0.55), 0 4px 12px rgba(0,0,0,0.18);
+    }
+    .btn-garantir:active { transform: translateY(0); }
+
+    .btn-garantir-topo {
+      width: 100%;
+      text-align: center;
+      background: rgba(0,20,137,0.1);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #001489;
+      padding: 7px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border-bottom: 1px solid rgba(0,20,137,0.1);
+    }
+    .btn-garantir-principal {
+      padding: 18px 24px 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #001489;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-garantir-sub {
+      padding: 0 16px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: rgba(0,20,137,0.7);
+      font-weight: 500;
+    }
+
+    @keyframes shimmerBtn {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes pulsoBtn {
+      0%, 100% { box-shadow: 0 6px 24px rgba(200,168,75,0.45), 0 2px 8px rgba(0,0,0,0.15); }
+      50%       { box-shadow: 0 6px 32px rgba(200,168,75,0.7),  0 2px 8px rgba(0,0,0,0.15); }
+    }
+
+    /* === OVERLAY DE BLOQUEIO === */
+    #resumoOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      cursor: not-allowed;
+    }
+    /* furo no overlay — o botão fica acima com z-index maior */
+    #btnFinalizar { position: relative; z-index: 900; }
+
+    /* === POPUP BACK REDIRECT === */
+    #backPopup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #backPopup.ativo { display: flex; }
+    #backPopupBox {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 420px;
+      width: 100%;
+      padding: 36px 28px 28px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      animation: popupEntrar 0.25s ease;
+    }
+    @keyframes popupEntrar {
+      from { transform: scale(0.88); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+    #backPopupIcone {
+      width: 64px; height: 64px;
+      background: #fff3cd;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 28px;
+      color: #b45309;
+      border: 3px solid #f59e0b;
+    }
+    #backPopupTitulo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    #backPopupMsg {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+    #backPopupFicar {
+      width: 100%;
+      background: linear-gradient(135deg, #C8A84B, #e8c85a, #C8A84B);
+      background-size: 200% auto;
+      color: #001489;
+      border: none;
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(200,168,75,0.4);
+      animation: shimmerBtn 2.5s linear infinite;
+    }
+    #backPopupFicar:hover { opacity: 0.92; }
+    #backPopupSair {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 4px;
+    }
+    #backPopupSair:hover { color: #666; }
+  </style>
+
+  <script>
+    /* ===== OVERLAY: bloqueia cliques fora do botão na tela de resumo ===== */
+    var resumoSection = document.getElementById('resumoSection');
+    var overlay       = document.getElementById('resumoOverlay');
+
+    /* Ativa o overlay quando o resumo aparecer */
+    var overlayObs = new MutationObserver(function () {
+      var visivel = resumoSection && resumoSection.style.display !== 'none'
+                    && window.getComputedStyle(resumoSection).display !== 'none';
+      overlay.style.display = visivel ? 'block' : 'none';
+    });
+    if (resumoSection) {
+      overlayObs.observe(resumoSection, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
+
+    /* ===== BACK REDIRECT ===== */
+    var _backPopupAberto = false;
+    var _saiuPeloPopup  = false;
+
+    function ativarBackRedirect() {
+      history.pushState(null, '', location.href); /* empurra estado extra */
+      window.addEventListener('popstate', handlePopstate);
+    }
+
+    function handlePopstate() {
+      if (_saiuPeloPopup) return;
+      history.pushState(null, '', location.href); /* impede navegação */
+      abrirBackPopup();
+    }
+
+    function abrirBackPopup() {
+      if (_backPopupAberto) return;
+      _backPopupAberto = true;
+      document.getElementById('backPopup').classList.add('ativo');
+    }
+
+    function fecharBackPopup() {
+      document.getElementById('backPopup').classList.remove('ativo');
+      _backPopupAberto = false;
+    }
+
+    function confirmarSaida() {
+      _saiuPeloPopup = true;
+      window.removeEventListener('popstate', handlePopstate);
+      history.back();
+    }
+
+    /* Ativa o back redirect quando o resumo aparecer */
+    var backObs = new MutationObserver(function () {
+      if (!resumoSection) return;
+      var visivel = resumoSection.style.display !== 'none'
+                    && window.getComputedStyle(resumoSection).display !== 'none';
+      if (visivel) ativarBackRedirect();
+    });
+    if (resumoSection) {
+      backObs.observe(resumoSection, { attributes: true, attributeFilter: ['style', 'class'] });
+    }
+  </script>
 </body>
 </html>
