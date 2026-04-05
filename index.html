@@ -181,6 +181,53 @@
       font-family: 'Inter', sans-serif;
       letter-spacing: 0.02em;
     }
+
+    /* === CARROSSEL === */
+    .carrosel-intro {
+      text-align: center;
+      margin: 52px auto 28px;
+      max-width: 580px;
+      font-size: 15px;
+      color: #555;
+      font-style: italic;
+      line-height: 1.65;
+    }
+    .carrosel-wrap {
+      overflow: hidden;
+      width: 100%;
+      padding: 4px 0 8px;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    .carrosel-track {
+      display: flex;
+      gap: 28px;
+      will-change: transform;
+    }
+    .carrosel-item {
+      flex-shrink: 0;
+      width: 200px;
+      text-align: center;
+    }
+    .carrosel-item img {
+      width: 200px;
+      height: 240px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 8px;
+      display: block;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .carrosel-nome {
+      display: block;
+      margin-top: 10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #00205B;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
   </style>
 
   <script type="application/ld+json">
@@ -362,6 +409,47 @@
           </div>
         </div>
       </div>
+
+      <p class="carrosel-intro">Veja alguns dos atletas revelados pelas categorias de base do Real Madrid que hoje são ídolos do clube</p>
+
+      <div class="carrosel-wrap" aria-label="Atletas revelados pela base do Real Madrid">
+        <div class="carrosel-track" id="carroselTrack">
+          <div class="carrosel-item">
+            <img src="imagens/0a2d9769ced8e6156fbd2a642a95455a.jpg" alt="Achraf Hakimi" loading="lazy">
+            <span class="carrosel-nome">Achraf Hakimi</span>
+          </div>
+          <div class="carrosel-item">
+            <img src="imagens/30beb62fff686b5e2164c195b3e01627.jpg" alt="Lucas Vázquez" loading="lazy">
+            <span class="carrosel-nome">Lucas Vázquez</span>
+          </div>
+          <div class="carrosel-item">
+            <img src="imagens/fc2d94104dc90801b686b8a548a34be8.jpg" alt="Dani Carvajal" loading="lazy">
+            <span class="carrosel-nome">Dani Carvajal</span>
+          </div>
+          <div class="carrosel-item">
+            <img src="imagens/dc8615179b986bbe8b3f42d77947853c.jpg" alt="Iker Casillas" loading="lazy">
+            <span class="carrosel-nome">Iker Casillas</span>
+          </div>
+          <!-- duplicados para loop contínuo -->
+          <div class="carrosel-item" aria-hidden="true">
+            <img src="imagens/0a2d9769ced8e6156fbd2a642a95455a.jpg" alt="" loading="lazy">
+            <span class="carrosel-nome">Achraf Hakimi</span>
+          </div>
+          <div class="carrosel-item" aria-hidden="true">
+            <img src="imagens/30beb62fff686b5e2164c195b3e01627.jpg" alt="" loading="lazy">
+            <span class="carrosel-nome">Lucas Vázquez</span>
+          </div>
+          <div class="carrosel-item" aria-hidden="true">
+            <img src="imagens/fc2d94104dc90801b686b8a548a34be8.jpg" alt="" loading="lazy">
+            <span class="carrosel-nome">Dani Carvajal</span>
+          </div>
+          <div class="carrosel-item" aria-hidden="true">
+            <img src="imagens/dc8615179b986bbe8b3f42d77947853c.jpg" alt="" loading="lazy">
+            <span class="carrosel-nome">Iker Casillas</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -690,6 +778,24 @@
     document.querySelectorAll('.stat-num[data-alvo]').forEach(function (el) {
       numObs.observe(el);
     });
+
+    /* ---- CARROSSEL AUTOMÁTICO ---- */
+    (function () {
+      var track = document.getElementById('carroselTrack');
+      if (!track) return;
+      var pos = 0;
+      var halfWidth = 0;
+
+      function calcHalf() { halfWidth = track.scrollWidth / 2; }
+      calcHalf();
+      window.addEventListener('resize', calcHalf);
+
+      setInterval(function () {
+        pos += 0.55;
+        if (pos >= halfWidth) pos = 0;
+        track.style.transform = 'translateX(-' + pos + 'px)';
+      }, 16);
+    })();
 
     /* ---- FAQ ACCORDION ---- */
     document.querySelectorAll('.faq-pergunta').forEach(function (btn) {
