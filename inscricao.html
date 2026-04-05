@@ -17,6 +17,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/protecao.js"></script>
+  <style>
+    .q8-cidade-confirm {
+      margin-top: 20px;
+    }
+    .q8-cidade-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .q8-cidade-display {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #001489;
+      background: #f0f4ff;
+      border: 2px solid #001489;
+      border-radius: 8px;
+      padding: 14px 18px;
+      letter-spacing: 0.01em;
+    }
+  </style>
 </head>
 <body class="quiz-page">
 
@@ -185,7 +209,7 @@
       <div class="quiz-input-row">
         <div class="quiz-input-grupo">
           <label for="q8-estado">Estado</label>
-          <select id="q8-estado" class="quiz-select" onchange="popularCidades()">
+          <select id="q8-estado" class="quiz-select" onchange="autoPreencherCidade()">
             <option value="">Selecione o estado</option>
             <option value="AC">AC — Acre</option>
             <option value="AL">AL — Alagoas</option>
@@ -216,17 +240,20 @@
             <option value="TO">TO — Tocantins</option>
           </select>
         </div>
-        <div class="quiz-input-grupo">
-          <label for="q8-cidade">Cidade</label>
-          <select id="q8-cidade" class="quiz-select" disabled>
-            <option value="">Selecione primeiro o estado</option>
-          </select>
-        </div>
       </div>
-      <div class="quiz-erro" id="erro-q8">Por favor, selecione o estado e a cidade.</div>
+
+      <div class="q8-cidade-confirm" id="q8CidadeConfirm" style="display:none">
+        <div class="q8-cidade-label">Cidade disponível para inscrição</div>
+        <div class="q8-cidade-display" id="q8CidadeDisplay">—</div>
+        <input type="hidden" id="q8-cidade" value="">
+      </div>
+
+      <div class="quiz-erro" id="erro-q8">Por favor, selecione o estado.</div>
       <div class="quiz-nav">
         <button class="btn-anterior" onclick="anteriorQ(8)"><i class="fas fa-arrow-left" aria-hidden="true"></i> Anterior</button>
-        <button class="btn btn-dourado" onclick="proximaQ(8)">Próximo <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+        <button class="btn btn-dourado" id="btnConfirmarCidade" onclick="proximaQ(8)" style="display:none">
+          Confirmar <span id="btnCidadeNome"></span> <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
 

@@ -15,46 +15,40 @@ var idadeAtleta   = 0; /* calculada em Q3, controla se Q11 é exibida */
 var barraProg  = document.getElementById('barraProg');
 var etapaTexto = document.getElementById('etapaTexto');
 
-/* ── Dados de cidades (carregado uma vez) ───────────────────────── */
-var _cidadesData = [];
-fetch('data/cidades.json')
-  .then(function(r) { return r.json(); })
-  .then(function(d) { _cidadesData = d; })
-  .catch(function() {});
+/* ── Mapa estado → cidade principal ────────────────────────────── */
+var CAPITAIS = {
+  AC: 'Rio Branco',      AL: 'Maceió',          AM: 'Manaus',
+  AP: 'Macapá',          BA: 'Salvador',         CE: 'Fortaleza',
+  DF: 'Brasília',        ES: 'Vitória',          GO: 'Goiânia',
+  MA: 'São Luís',        MG: 'Belo Horizonte',   MS: 'Campo Grande',
+  MT: 'Cuiabá',          PA: 'Belém',            PB: 'João Pessoa',
+  PE: 'Recife',          PI: 'Teresina',         PR: 'Curitiba',
+  RJ: 'Rio de Janeiro',  RN: 'Natal',            RO: 'Porto Velho',
+  RR: 'Boa Vista',       RS: 'Porto Alegre',     SC: 'Florianópolis',
+  SE: 'Aracaju',         SP: 'São Paulo',        TO: 'Palmas'
+};
 
-function popularCidades() {
-  var estado     = document.getElementById('q8-estado').value;
-  var selCidade  = document.getElementById('q8-cidade');
-  selCidade.innerHTML = '';
+function autoPreencherCidade() {
+  var estado       = document.getElementById('q8-estado').value;
+  var confirmDiv   = document.getElementById('q8CidadeConfirm');
+  var displayEl    = document.getElementById('q8CidadeDisplay');
+  var hiddenEl     = document.getElementById('q8-cidade');
+  var btnConfirmar = document.getElementById('btnConfirmarCidade');
+  var btnNomeEl    = document.getElementById('btnCidadeNome');
 
-  if (!estado) {
-    selCidade.innerHTML = '<option value="">Selecione primeiro o estado</option>';
-    selCidade.disabled = true;
+  if (!estado || !CAPITAIS[estado]) {
+    confirmDiv.style.display   = 'none';
+    btnConfirmar.style.display = 'none';
+    hiddenEl.value = '';
     return;
   }
 
-  var cidades = _cidadesData
-    .filter(function(c) { return c.estado === estado; })
-    .sort(function(a, b) { return a.cidade.localeCompare(b.cidade, 'pt-BR'); });
-
-  if (cidades.length === 0) {
-    selCidade.innerHTML = '<option value="">Nenhuma cidade disponível no seu estado</option>';
-    selCidade.disabled = true;
-    return;
-  }
-
-  var defaultOpt = document.createElement('option');
-  defaultOpt.value = '';
-  defaultOpt.textContent = 'Selecione a cidade';
-  selCidade.appendChild(defaultOpt);
-
-  cidades.forEach(function(c) {
-    var opt = document.createElement('option');
-    opt.value = c.cidade;
-    opt.textContent = c.cidade;
-    selCidade.appendChild(opt);
-  });
-  selCidade.disabled = false;
+  var cidade = CAPITAIS[estado];
+  hiddenEl.value        = cidade;
+  displayEl.textContent = cidade;
+  btnNomeEl.textContent = cidade;
+  confirmDiv.style.display   = 'block';
+  btnConfirmar.style.display = 'inline-flex';
 }
 
 /* ── Utilitários ─────────────────────────────────────────────────── */
@@ -251,15 +245,11 @@ function validarQ(n) {
     case 8: {
       var estado = document.getElementById('q8-estado').value;
       var cidade = document.getElementById('q8-cidade').value;
-      if (!estado) {
-        mostrarErroMsg('q8', 'Por favor, selecione o estado.');
+      if (!estado || !cidade) {
+        mostrarErroMsg('q8', 'Por favor, selecione o seu estado.');
         return false;
       }
-      if (!cidade) {
-        mostrarErroMsg('q8', 'Por favor, selecione a cidade.');
-        return false;
-      }
-      dadosAtleta.estado      = estado;
+      dadosAtleta.estado       = estado;
       dadosAtleta.cidadeAtleta = cidade;
       return true;
     }
