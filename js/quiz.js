@@ -16,39 +16,21 @@ var barraProg  = document.getElementById('barraProg');
 var etapaTexto = document.getElementById('etapaTexto');
 
 /* ── Mapa estado → cidade principal ────────────────────────────── */
-var CAPITAIS = {
-  AC: 'Rio Branco',      AL: 'Maceió',          AM: 'Manaus',
-  AP: 'Macapá',          BA: 'Salvador',         CE: 'Fortaleza',
-  DF: 'Brasília',        ES: 'Vitória',          GO: 'Goiânia',
-  MA: 'São Luís',        MG: 'Belo Horizonte',   MS: 'Campo Grande',
-  MT: 'Cuiabá',          PA: 'Belém',            PB: 'João Pessoa',
-  PE: 'Recife',          PI: 'Teresina',         PR: 'Curitiba',
-  RJ: 'Rio de Janeiro',  RN: 'Natal',            RO: 'Porto Velho',
-  RR: 'Boa Vista',       RS: 'Porto Alegre',     SC: 'Florianópolis',
-  SE: 'Aracaju',         SP: 'São Paulo',        TO: 'Palmas'
+var NOMES_ESTADO = {
+  AC:'Acre', AL:'Alagoas', AM:'Amazonas', AP:'Amapá', BA:'Bahia',
+  CE:'Ceará', DF:'Distrito Federal', ES:'Espírito Santo', GO:'Goiás',
+  MA:'Maranhão', MG:'Minas Gerais', MS:'Mato Grosso do Sul', MT:'Mato Grosso',
+  PA:'Pará', PB:'Paraíba', PE:'Pernambuco', PI:'Piauí', PR:'Paraná',
+  RJ:'Rio de Janeiro', RN:'Rio Grande do Norte', RO:'Rondônia', RR:'Roraima',
+  RS:'Rio Grande do Sul', SC:'Santa Catarina', SE:'Sergipe', SP:'São Paulo',
+  TO:'Tocantins'
 };
 
-function autoPreencherCidade() {
-  var estado       = document.getElementById('q8-estado').value;
-  var confirmDiv   = document.getElementById('q8CidadeConfirm');
-  var displayEl    = document.getElementById('q8CidadeDisplay');
-  var hiddenEl     = document.getElementById('q8-cidade');
-  var btnConfirmar = document.getElementById('btnConfirmarCidade');
-  var btnNomeEl    = document.getElementById('btnCidadeNome');
-
-  if (!estado || !CAPITAIS[estado]) {
-    confirmDiv.style.display   = 'none';
-    btnConfirmar.style.display = 'none';
-    hiddenEl.value = '';
-    return;
-  }
-
-  var cidade = CAPITAIS[estado];
-  hiddenEl.value        = cidade;
-  displayEl.textContent = cidade;
-  btnNomeEl.textContent = cidade;
-  confirmDiv.style.display   = 'block';
-  btnConfirmar.style.display = 'inline-flex';
+function preencherQ8(cidade, estado) {
+  document.getElementById('q8-cidade').value    = cidade;
+  document.getElementById('q8-estado').value    = estado;
+  document.getElementById('q8ConfirmCidade').textContent = cidade;
+  document.getElementById('q8ConfirmEstado').textContent = NOMES_ESTADO[estado] || estado;
 }
 
 /* ── Utilitários ─────────────────────────────────────────────────── */
@@ -241,12 +223,12 @@ function validarQ(n) {
       return true;
     }
 
-    /* Q8 — Estado e cidade */
+    /* Q8 — Confirmação de cidade (preenchida automaticamente via localStorage) */
     case 8: {
-      var estado = document.getElementById('q8-estado').value;
       var cidade = document.getElementById('q8-cidade').value;
-      if (!estado || !cidade) {
-        mostrarErroMsg('q8', 'Por favor, selecione o seu estado.');
+      var estado = document.getElementById('q8-estado').value;
+      if (!cidade || !estado) {
+        mostrarErroMsg('q8', 'Não foi possível identificar sua cidade. Volte à página anterior e selecione novamente.');
         return false;
       }
       dadosAtleta.estado       = estado;
@@ -385,20 +367,11 @@ function restaurarProgresso() {
       });
     });
 
-    /* Restaurar cidade (select dinâmico — depende de _cidadesData estar carregado) */
+    /* Restaurar cidade no card-8 (campos hidden + display) */
     var _estadoSalvo = prog.campos && prog.campos['q8-estado'];
-    var _cidadeSalva = prog.dados && prog.dados.cidadeAtleta;
-    if (_estadoSalvo) {
-      var _tentarRestaurarCidade = function() {
-        if (_cidadesData.length > 0) {
-          popularCidades();
-          var selC = document.getElementById('q8-cidade');
-          if (selC && _cidadeSalva) selC.value = _cidadeSalva;
-        } else {
-          setTimeout(_tentarRestaurarCidade, 100);
-        }
-      };
-      _tentarRestaurarCidade();
+    var _cidadeSalva = prog.campos && prog.campos['q8-cidade'];
+    if (_estadoSalvo && _cidadeSalva) {
+      preencherQ8(_cidadeSalva, _estadoSalvo);
     }
 
     /* Navegar para a questão salva */
@@ -647,12 +620,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (cidadeSalva) {
       try {
         var obj = JSON.parse(cidadeSalva);
-        var selEstado = document.getElementById('q8-estado');
-        if (selEstado && obj.estado) {
-          selEstado.value = obj.estado;
-          popularCidades();
-          var selCidade = document.getElementById('q8-cidade');
-          if (selCidade && obj.cidade) selCidade.value = obj.cidade;
+        if (obj.cidade && obj.estado) {
+          preencherQ8(obj.cidade, obj.estado);
         }
       } catch (e) {}
     }
