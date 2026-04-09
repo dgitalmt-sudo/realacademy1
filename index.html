@@ -96,6 +96,213 @@
       .faq-resposta p { padding: 16px 18px; font-size: 14px; }
     }
 
+    /* === TESTES === */
+    .sec-testes {
+      background: #fff;
+      padding: 80px 24px;
+    }
+    .sec-testes-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .testes-topo {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .testes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+    .teste-card {
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .teste-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00205B, #C8A84B);
+    }
+    .teste-etapa {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #C8A84B;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .teste-titulo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #00205B;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .teste-desc {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.65;
+    }
+    .teste-itens {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .teste-itens li {
+      font-size: 13px;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+    .teste-itens li i {
+      color: #C8A84B;
+      font-size: 11px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .testes-aviso {
+      background: #f5f8ff;
+      border-left: 4px solid #00205B;
+      border-radius: 0 8px 8px 0;
+      padding: 18px 24px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .testes-aviso i { color: #00205B; font-size: 16px; margin-top: 2px; flex-shrink: 0; }
+    @media (max-width: 900px) {
+      .testes-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .testes-grid { grid-template-columns: 1fr; }
+    }
+
+    /* === APROVAÇÃO === */
+    .sec-aprovacao {
+      background: #00205B;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sec-aprovacao::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(200,168,75,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .sec-aprovacao-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .aprov-topo {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .aprov-topo .sec-label { color: #C8A84B; }
+    .aprov-topo .sec-titulo { color: #fff; }
+    .aprov-topo .sec-sub { color: rgba(255,255,255,0.65); }
+    .aprov-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .aprov-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .aprov-card:hover { background: rgba(255,255,255,0.1); }
+    .aprov-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: #C8A84B;
+      letter-spacing: 0.1em;
+    }
+    .aprov-icon {
+      font-size: 28px;
+      color: #C8A84B;
+      margin: 4px 0;
+    }
+    .aprov-card-titulo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .aprov-card-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+    }
+    .aprov-destaque {
+      background: rgba(200,168,75,0.12);
+      border: 1px solid rgba(200,168,75,0.35);
+      border-radius: 12px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .aprov-destaque-icon {
+      font-size: 40px;
+      color: #C8A84B;
+      flex-shrink: 0;
+    }
+    .aprov-destaque-texto strong {
+      display: block;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 6px;
+    }
+    .aprov-destaque-texto p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.65;
+      margin: 0;
+    }
+    @media (max-width: 900px) {
+      .aprov-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .aprov-grid { grid-template-columns: 1fr; }
+      .aprov-destaque { flex-direction: column; text-align: center; }
+    }
+
     /* === FAIXA RETORNO === */
     .retorno-faixa {
       background: #00205B;
@@ -497,6 +704,146 @@
           <p class="passo-desc">O endereço exato será enviado ao seu e-mail <strong>7 dias antes do evento</strong>. Apresente-se no local e horário confirmados com 30 minutos de antecedência.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ===== COMO SÃO OS TESTES ===== -->
+  <section class="sec-testes" aria-labelledby="testes-titulo">
+    <div class="sec-testes-inner">
+      <div class="testes-topo reveal">
+        <span class="sec-label">Avaliação</span>
+        <h2 class="sec-titulo" id="testes-titulo">Como são os testes</h2>
+        <p class="sec-sub">Entenda cada etapa da avaliação que acontece no dia 14 de junho</p>
+      </div>
+
+      <div class="testes-grid reveal">
+
+        <div class="teste-card">
+          <span class="teste-etapa">Etapa 1 · Chegada</span>
+          <div class="teste-titulo">Credenciamento</div>
+          <p class="teste-desc">Ao chegar ao local, o atleta apresenta documentação e recebe seu número de identificação. O processo leva cerca de 10 minutos.</p>
+          <ul class="teste-itens">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Apresentação de RG e CPF</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Confirmação do comprovante de inscrição</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Chegada obrigatória 30 min antes</li>
+          </ul>
+        </div>
+
+        <div class="teste-card">
+          <span class="teste-etapa">Etapa 2 · Físico</span>
+          <div class="teste-titulo">Testes físicos</div>
+          <p class="teste-desc">Avaliação de capacidades físicas fundamentais para o futebol, aplicadas por faixa etária e posição.</p>
+          <ul class="teste-itens">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Velocidade em sprint de 20 metros</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Teste de resistência aeróbica (Yo-Yo)</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Coordenação motora e agilidade em slalom</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Força de chute e precisão</li>
+          </ul>
+        </div>
+
+        <div class="teste-card">
+          <span class="teste-etapa">Etapa 3 · Técnica</span>
+          <div class="teste-titulo">Avaliação técnica</div>
+          <p class="teste-desc">Exercícios técnicos individuais avaliados por olheiros credenciados, adaptados à posição de cada atleta.</p>
+          <ul class="teste-itens">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Domínio e controle de bola</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Passe curto e longo com precisão</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Condução sob pressão</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Habilidades específicas por posição</li>
+          </ul>
+        </div>
+
+        <div class="teste-card">
+          <span class="teste-etapa">Etapa 4 · Tático</span>
+          <div class="teste-titulo">Jogo reduzido</div>
+          <p class="teste-desc">Partida em formato reduzido (futsal ou campo pequeno) para avaliação de leitura de jogo, posicionamento e tomada de decisão.</p>
+          <ul class="teste-itens">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Leitura tática e posicionamento</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Comunicação e trabalho coletivo</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Atitude e intensidade em campo</li>
+          </ul>
+        </div>
+
+        <div class="teste-card">
+          <span class="teste-etapa">Etapa 5 · Individual</span>
+          <div class="teste-titulo">Análise com olheiro</div>
+          <p class="teste-desc">Cada atleta é observado individualmente pelo olheiro responsável por sua posição, que preenche uma ficha de avaliação detalhada.</p>
+          <ul class="teste-itens">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Ficha individual por posição</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Critérios técnicos do Real Madrid</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Avaliação comportamental e de postura</li>
+          </ul>
+        </div>
+
+        <div class="teste-card">
+          <span class="teste-etapa">Duração</span>
+          <div class="teste-titulo">Tempo total</div>
+          <p class="teste-desc">A peneira tem duração aproximada de <strong style="color:#00205B">3 a 4 horas</strong>, incluindo todas as etapas. O atleta deve estar descansado, bem alimentado e hidratado.</p>
+          <ul class="teste-itens">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Leve lanche e água para o intervalo</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Chuteira, meião e caneleira obrigatórios</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Roupa de treino confortável</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="testes-aviso">
+        <i class="fas fa-info-circle" aria-hidden="true"></i>
+        <span>As etapas e critérios podem variar conforme a faixa etária e posição do atleta. Os olheiros aplicam fichas de avaliação específicas do programa Real Academy, seguindo os padrões das categorias de base do Real Madrid C.F.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== APÓS A APROVAÇÃO ===== -->
+  <section class="sec-aprovacao" aria-labelledby="aprov-titulo">
+    <div class="sec-aprovacao-inner">
+      <div class="aprov-topo reveal">
+        <span class="sec-label">Próximos Passos</span>
+        <h2 class="sec-titulo" id="aprov-titulo">O que acontece após a aprovação</h2>
+        <p class="sec-sub">O caminho do atleta selecionado — do resultado até o início dos treinos</p>
+      </div>
+
+      <div class="aprov-grid reveal">
+
+        <div class="aprov-card">
+          <span class="aprov-num">01</span>
+          <div class="aprov-icon"><i class="fas fa-envelope-open-text" aria-hidden="true"></i></div>
+          <div class="aprov-card-titulo">Convocação oficial</div>
+          <p class="aprov-card-desc">Os atletas aprovados recebem contato direto da Real Academy Brasil em até 15 dias após a peneira, com a proposta formal de ingresso.</p>
+        </div>
+
+        <div class="aprov-card">
+          <span class="aprov-num">02</span>
+          <div class="aprov-icon"><i class="fas fa-users" aria-hidden="true"></i></div>
+          <div class="aprov-card-titulo">Reunião com a família</div>
+          <p class="aprov-card-desc">Uma reunião presencial ou por videoconferência é agendada com os responsáveis para detalhar logística, cronograma e início dos treinos.</p>
+        </div>
+
+        <div class="aprov-card">
+          <span class="aprov-num">03</span>
+          <div class="aprov-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></div>
+          <div class="aprov-card-titulo">Base em SP ou RJ</div>
+          <p class="aprov-card-desc">O programa de treinamento está sediado em São Paulo e Rio de Janeiro. Os treinos são presenciais, sem custo mensal para o atleta.</p>
+        </div>
+
+        <div class="aprov-card">
+          <span class="aprov-num">04</span>
+          <div class="aprov-icon"><i class="fas fa-plane" aria-hidden="true"></i></div>
+          <div class="aprov-card-titulo">Chance na Espanha</div>
+          <p class="aprov-card-desc">Os destaques do programa têm chances reais de serem indicados para treinar na Espanha, conforme evolução e avaliação contínua dos olheiros.</p>
+        </div>
+
+      </div>
+
+      <div class="aprov-destaque reveal">
+        <div class="aprov-destaque-icon"><i class="fas fa-hand-holding-usd" aria-hidden="true"></i></div>
+        <div class="aprov-destaque-texto">
+          <strong>Ajuda de custo de R$ 2.000 mensais</strong>
+          <p>Os atletas selecionados para as categorias de base recebem ajuda de custo mensal de <strong style="color:#C8A84B">R$ 2.000</strong> para auxiliar no deslocamento e dedicação ao programa. Os detalhes são tratados diretamente com a família após a aprovação e assinatura do contrato.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 

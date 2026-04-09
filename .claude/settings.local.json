@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Davi/.claude/skills/**)",
+      "Read(//c/Users/Davi/.claude/commands/**)",
+      "Read(//c/Users/Davi/.claude/agents/**)"
+    ]
+  }
+}
