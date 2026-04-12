@@ -48,6 +48,9 @@ document.getElementById('btnConfirmarAgendamento').addEventListener('click', fun
   document.getElementById('etapaTexto').textContent = 'Etapa 4 de 4 — Confirmação e Pagamento';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  /* ── Evento Meta: InitiateCheckout ──────────────────────────── */
+  _dispararEventoMeta('InitiateCheckout', { value: 79.90, currency: 'BRL', num_items: 1 });
 });
 
 /* ── Preencher card de resumo ────────────────────────────── */
@@ -73,9 +76,53 @@ function preencherResumo() {
   el('resumoIdade').textContent = idadeExibir ? idadeExibir + ' anos (em 14/06/2026)' : '—';
 }
 
-/* ── Botão "Garantir Minha Vaga" — checkout externo ────────── */
-/* Navegação tratada pelo href do <a>; nenhuma ação extra necessária. */
+/* ── Helpers de tracking Meta ───────────────────────────────── */
+function _sha256(str) {
+  /* Retorna Promise<hex> — usa SubtleCrypto nativo do browser */
+  var buf = new TextEncoder().encode(str.trim().toLowerCase());
+  return crypto.subtle.digest('SHA-256', buf).then(function (hash) {
+    return Array.from(new Uint8Array(hash)).map(function (b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  });
+}
 
+function _dispararEventoMeta(eventName, params) {
+  try {
+    if (typeof fbq === 'function') {
+      fbq('track', eventName, params || {});
+    }
+    /* Utmify custom event (se disponível) */
+    if (window.UtmifyPixel && typeof window.UtmifyPixel.track === 'function') {
+      window.UtmifyPixel.track(eventName, params || {});
+    }
+  } catch (e) { /* falha silenciosa */ }
+}
+
+/* ── Botão "Garantir Minha Vaga" — dispara Lead antes do checkout ── */
+document.addEventListener('DOMContentLoaded', function () {
+  var btn = document.getElementById('btnFinalizar');
+  if (!btn) return;
+
+  btn.addEventListener('click', function () {
+    var dados = {};
+    try { dados = JSON.parse(localStorage.getItem('dadosAtleta') || '{}'); } catch (e) {}
+
+    var email    = (dados.email    || '').trim().toLowerCase();
+    var telefone = (dados.telefone || '').replace(/\D/g, '');
+
+    /* Hashes SHA-256 obrigatórios pelo Meta para dados pessoais */
+    Promise.all([
+      email    ? _sha256(email)    : Promise.resolve(null),
+      telefone ? _sha256(telefone) : Promise.resolve(null)
+    ]).then(function (hashes) {
+      var params = { value: 79.90, currency: 'BRL' };
+      if (hashes[0]) params.em = hashes[0];
+      if (hashes[1]) params.ph = hashes[1];
+      _dispararEventoMeta('Lead', params);
+    });
+  });
+});
 
 /* ── Inicialização da etapa de agendamento ───────────────── */
 (function inicializarAgendamento() {
