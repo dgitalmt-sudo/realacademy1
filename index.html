@@ -17,6 +17,153 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="js/protecao.js"></script>
   <style>
+    /* === POPUP BOAS-VINDAS === */
+    #popupOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      transition: opacity 0.5s ease;
+    }
+    #popupOverlay.fechando {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #popupCard {
+      background: linear-gradient(160deg, #001440 0%, #00205B 100%);
+      border: 1px solid rgba(200, 168, 75, 0.25);
+      border-radius: 20px;
+      max-width: 480px;
+      width: 100%;
+      padding: 48px 40px 40px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,168,75,0.08);
+      overflow: hidden;
+    }
+    #popupCard::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #C8A84B, transparent);
+    }
+    #popupCard::after {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(200,168,75,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #popupLogo {
+      width: 80px;
+      height: auto;
+      margin: 0 auto 18px;
+      display: block;
+      filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+    }
+    #popupNome {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: #C8A84B;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    #popupDivisor {
+      width: 44px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #C8A84B, transparent);
+      margin: 0 auto 22px;
+    }
+    #popupTexto {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+    #popupTexto strong {
+      color: #fff;
+      font-weight: 600;
+    }
+    #popupPlayBtn {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #C8A84B, #dfc06e);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: 0 8px 28px rgba(200,168,75,0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+    #popupPlayBtn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 12px 36px rgba(200,168,75,0.6);
+    }
+    #popupPlayBtn:active { transform: scale(0.95); }
+    #popupPlayBtn i {
+      font-size: 26px;
+      color: #00205B;
+      margin-left: 4px;
+    }
+    #popupPlayBtn.tocando {
+      background: linear-gradient(135deg, #1a6b3c, #27a35a);
+      box-shadow: 0 8px 28px rgba(39,163,90,0.45);
+      animation: pulseAudio 1.6s ease-in-out infinite;
+    }
+    #popupPlayBtn.tocando i { margin-left: 0; }
+    @keyframes pulseAudio {
+      0%, 100% { box-shadow: 0 8px 28px rgba(39,163,90,0.45); }
+      50%       { box-shadow: 0 8px 44px rgba(39,163,90,0.75); }
+    }
+    #popupPlayLabel {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.38);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    #popupFechar {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.45);
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    #popupFechar.visivel { display: flex; }
+    #popupFechar:hover { background: rgba(255,255,255,0.14); color: #fff; }
+    @media (max-width: 520px) {
+      #popupCard { padding: 40px 22px 32px; border-radius: 16px; }
+      #popupNome { font-size: 18px; }
+      #popupTexto { font-size: 14px; margin-bottom: 28px; }
+      #popupPlayBtn { width: 68px; height: 68px; }
+      #popupPlayBtn i { font-size: 22px; }
+    }
+
     /* === FAQ === */
     .sec-faq {
       background: #f9f9f9;
@@ -478,6 +625,28 @@
   </script>
 </head>
 <body>
+
+  <!-- ===== POPUP BOAS-VINDAS ===== -->
+  <div id="popupOverlay" role="dialog" aria-modal="true" aria-labelledby="popupNome">
+    <div id="popupCard">
+      <button id="popupFechar" aria-label="Fechar popup">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </button>
+      <img id="popupLogo" src="imagens/escudo.png" alt="Real Academy Brasil">
+      <div id="popupNome">Real Academy Brasil</div>
+      <div id="popupDivisor" aria-hidden="true"></div>
+      <p id="popupTexto">
+        Ouça como funciona o processo de seleção para as <strong>categorias de base do Real Madrid</strong> no Brasil — inscrição, avaliação e o que acontece com quem for aprovado.
+      </p>
+      <button id="popupPlayBtn" aria-label="Reproduzir áudio de boas-vindas">
+        <i class="fas fa-play" aria-hidden="true"></i>
+      </button>
+      <div id="popupPlayLabel" aria-live="polite">Toque para ouvir</div>
+      <audio id="popupAudio" preload="auto">
+        <source src="audio/audioboas-vindas.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
 
   <!-- ===== HEADER ===== -->
   <header class="hdr" id="hdr">
@@ -1174,6 +1343,65 @@
         }
       });
     });
+  </script>
+
+  <script>
+    /* ---- POPUP BOAS-VINDAS ---- */
+    (function () {
+      var overlay  = document.getElementById('popupOverlay');
+      var card     = document.getElementById('popupCard');
+      var playBtn  = document.getElementById('popupPlayBtn');
+      var playIcon = playBtn.querySelector('i');
+      var label    = document.getElementById('popupPlayLabel');
+      var fecharBtn = document.getElementById('popupFechar');
+      var audio    = document.getElementById('popupAudio');
+
+      /* Bloqueia scroll do body enquanto popup estiver aberto */
+      document.body.style.overflow = 'hidden';
+
+      function fecharPopup() {
+        overlay.classList.add('fechando');
+        setTimeout(function () {
+          overlay.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 500);
+      }
+
+      /* Clique no play */
+      playBtn.addEventListener('click', function () {
+        var promise = audio.play();
+        if (promise !== undefined) {
+          promise.then(function () {
+            /* Áudio iniciou com sucesso */
+            playBtn.classList.add('tocando');
+            playIcon.classList.remove('fa-play');
+            playIcon.classList.add('fa-volume-up');
+            label.textContent = 'Reproduzindo...';
+          }).catch(function () {
+            label.textContent = 'Erro ao reproduzir';
+          });
+        }
+      });
+
+      /* Áudio terminou — fecha automaticamente e exibe X como fallback */
+      audio.addEventListener('ended', function () {
+        fecharPopup();
+        fecharBtn.classList.add('visivel');
+      });
+
+      /* Botão X (fallback manual) */
+      fecharBtn.addEventListener('click', fecharPopup);
+
+      /* Impede fechar clicando fora do card */
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) e.stopPropagation();
+      });
+
+      /* Impede fechar com tecla ESC */
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') e.preventDefault();
+      });
+    })();
   </script>
 
 </body>
