@@ -139,6 +139,18 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
+    #popupVolumeAviso {
+      margin-top: 18px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      letter-spacing: 0.01em;
+    }
+    #popupVolumeAviso i { font-size: 13px; color: rgba(200,168,75,0.5); }
     #popupFechar {
       position: absolute;
       top: 14px; right: 14px;
@@ -642,6 +654,10 @@
         <i class="fas fa-play" aria-hidden="true"></i>
       </button>
       <div id="popupPlayLabel" aria-live="polite">Toque para ouvir</div>
+      <div id="popupVolumeAviso">
+        <i class="fas fa-volume-up" aria-hidden="true"></i>
+        Verifique se o volume do seu dispositivo está ligado
+      </div>
       <audio id="popupAudio" preload="auto">
         <source src="audio/audioboas-vindas.mp3" type="audio/mpeg">
       </audio>
@@ -1369,18 +1385,17 @@
 
       /* Clique no play */
       playBtn.addEventListener('click', function () {
-        var promise = audio.play();
-        if (promise !== undefined) {
-          promise.then(function () {
-            /* Áudio iniciou com sucesso */
-            playBtn.classList.add('tocando');
-            playIcon.classList.remove('fa-play');
-            playIcon.classList.add('fa-volume-up');
-            label.textContent = 'Reproduzindo...';
-          }).catch(function () {
-            label.textContent = 'Erro ao reproduzir';
-          });
-        }
+        audio.volume = 1;
+        audio.currentTime = 0;
+        audio.play().then(function () {
+          playBtn.classList.add('tocando');
+          playIcon.classList.remove('fa-play');
+          playIcon.classList.add('fa-volume-up');
+          label.textContent = 'Reproduzindo...';
+        }).catch(function (err) {
+          console.error('Erro ao reproduzir áudio:', err);
+          label.textContent = 'Não foi possível reproduzir';
+        });
       });
 
       /* Áudio terminou — fecha automaticamente e exibe X como fallback */
